@@ -12,8 +12,8 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "n", awful.tag.viewnext, {description = "view next", group = "tag"}),
     awful.key({ modkey }, "Escape", awful.tag.history.restore, {description = "go back", group = "tag"}),
 
-    awful.key({ modkey }, "F5", function() awful.spawn.with_shell("light -U 10") end, {description = "decrease brightness", group = "screen"}),
-    awful.key({ modkey }, "F6", function() awful.spawn.with_shell("light -A 10") end, {description = "increase brightness", group = "screen"}),
+    -- awful.key({ modkey }, "F5", function() awful.spawn.with_shell("light -U 10") end, {description = "decrease brightness", group = "screen"}),
+    -- awful.key({ modkey }, "F6", function() awful.spawn.with_shell("light -A 10") end, {description = "increase brightness", group = "screen"}),
 
     awful.key({ modkey }, "j",
         function ()
@@ -80,8 +80,8 @@ globalkeys = gears.table.join(
     -- Launcher
     -- awful.key({ modkey }, "space", function() menubar.show() end,
     --           {description = "show the menubar", group = "launcher"}),
-    awful.key({ modkey }, "space", function () awful.spawn.with_shell("rofi -show") end, { description = "run app launcher", group = "launcher" }),
-    awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end, {description = "run prompt", group = "launcher"}),
+    -- awful.key({ modkey }, "space", function () awful.spawn.with_shell("rofi -show") end, { description = "run app launcher", group = "launcher" }),
+    -- awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end, {description = "run prompt", group = "launcher"}),
 
     awful.key({ modkey }, "x",
               function ()
