@@ -6,22 +6,33 @@ local battery = wibox.widget {
     widget = wibox.widget.textbox
 }
 
+local status_icon = {
+    {99, "", ""},
+    {90, "", ""},
+    {80, "", ""},
+    {70, "", ""},
+    {60, "", ""},
+    {50, "", ""},
+    {40, "", ""},
+    {30, "", ""},
+    {20, "", ""},
+    {10, "", ""},
+    { 0, "", ""},
+}
+
 awesome.connect_signal("status::battery", function(capacity, charging)
     battery.font = beautiful.icon_font
     local text = capacity .. "% "
 
-    if (charging == true) then
-        text = text .. ""
-    elseif (capacity >= 99) then
-        text = text .. ""
-    elseif (capacity > 80) then
-        text = text .. ""
-    elseif (capacity > 50) then
-        text = text .. ""
-    elseif (capacity > 20) then
-        text = text .. ""
-    else
-        text = text .. ""
+    for _, value in pairs(status_icon) do
+        if capacity >= value[1] then
+            if (charging == true) then
+                text = text .. value[2]
+            else
+                text = text .. value[3]
+            end
+            break
+        end
     end
 
     battery.text = text
