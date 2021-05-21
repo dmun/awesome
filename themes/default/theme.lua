@@ -11,13 +11,13 @@ local themes_path = "~/.config/awesome/themes/"
 
 local theme = {}
 
-theme.font          = "Ubuntu 11"
-theme.icon_font     = "Ubuntu 11"
+theme.font          = "sans 11"
+theme.icon_font     = "sans 11"
 theme.taglist_font  = "Symbols Nerd Font 12"
 
 -- theme.bg_normal     = "#232831"
 -- theme.bg_focus      = "#2d333f"
-theme.bg_normal     = "#090909"
+theme.bg_normal     = "#101010"
 theme.bg_focus      = "#1e1e1e"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
@@ -49,7 +49,7 @@ theme.border_marked = "#91231c"
 theme.menu_height = dpi(15)
 theme.menu_width  = dpi(100)
 
-theme.wallpaper = themes_path .. "default/macOS-Big-Sur-Daylight-Wallpaper-iDownloadBlog-2.jpg"
+theme.wallpaper = themes_path .. "default/background.png"
 theme.icon_theme = nil
 
 return theme
