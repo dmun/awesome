@@ -27,9 +27,9 @@ awesome.connect_signal("status::battery", function(capacity, charging)
     for _, value in pairs(status_icon) do
         if capacity >= value[1] then
             if (charging == true) then
-                text = text .. value[2]
-            else
                 text = text .. value[3]
+            else
+                text = text .. value[2]
             end
             break
         end
