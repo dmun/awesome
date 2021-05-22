@@ -1,10 +1,9 @@
-local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
-local widget_padding = 10
+local widget_padding = 12
 local wibar_height = 22
 
 -- Widget imports
@@ -43,7 +42,7 @@ function wibar.get(s)
         layout = wibox.layout.fixed.horizontal,
     }
 
-    for i,v in ipairs(right_widgets) do
+    for _,v in ipairs(right_widgets) do
         right[#right+1] = ({
             v,
             left = widget_padding,
