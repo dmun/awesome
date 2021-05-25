@@ -3,7 +3,7 @@ local wibox = require("wibox")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
-local widget_padding = 12
+local widget_padding = 18
 local wibar_height = 22
 
 -- Widget imports
@@ -11,11 +11,13 @@ local mytaglist = require("widgets.taglist")
 local mysystray = require("widgets.systray")
 local mybattery = require("widgets.battery")
 local mynetwork = require("widgets.network")
+local mymemory = require("widgets.memory")
 local mytextclock = require("widgets.textclock")
 
 -- Activated widgets
 local right_widgets = {
     mysystray,
+    mymemory,
     mybattery,
     mynetwork,
     mytextclock
@@ -56,7 +58,7 @@ function wibar.get(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             left,
-            left = 20,
+            -- left = 20,
             right = 10,
             widget = wibox.container.margin
         },

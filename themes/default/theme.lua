@@ -11,14 +11,14 @@ local themes_path = "~/.config/awesome/themes/"
 
 local theme = {}
 
-theme.font          = "sans 11"
-theme.icon_font     = "sans 11"
-theme.taglist_font  = "Symbols Nerd Font 12"
+theme.font          = "monospace 11"
+theme.icon_font     = "monospace 11"
+theme.taglist_font  = "Symbols Nerd Font 11"
 
 -- theme.bg_normal     = "#232831"
 -- theme.bg_focus      = "#2d333f"
-theme.bg_normal     = "#101010"
-theme.bg_focus      = "#1e1e1e"
+theme.bg_normal     = "#1a1a1a"
+theme.bg_focus      = "#062f4A"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
