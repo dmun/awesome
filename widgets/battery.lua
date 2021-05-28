@@ -21,21 +21,21 @@ local status_icon = {
 }
 
 awesome.connect_signal("status::battery", function(capacity, charging)
-    battery.font = beautiful.icon_font
-    local text = capacity .. "%"
+    battery.font = beautiful.font
+    local markup = capacity .. "%"
 
     for _, value in pairs(status_icon) do
         if capacity >= value[1] then
             if (charging == true) then
-                text = value[3] .. text
+                markup = "<span foreground='608b4e'>" .. value[3] .. "</span>".. markup
             else
-                text = value[2] .. text
+                markup = value[2] .. markup
             end
             break
         end
     end
 
-    battery.text = text
+    battery.markup = markup
 end)
 
 return battery
