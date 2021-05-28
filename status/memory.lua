@@ -5,10 +5,14 @@ local interval = 10
 awful.widget.watch("cat /proc/meminfo", interval, function(_, stdout)
     local memory
 
-    memory = stdout
-    for line in stdout do
-        memory = line
-    end
+    mem_total = tonumber(stdout:match("MemTotal: *(%d*) kB"))
+    shmem = tonumber(stdout:match("Shmem: *(%d*) kB"))
+    mem_free = tonumber(stdout:match("MemFree: *(%d*) kB"))
+    buffers = tonumber(stdout:match("Buffers: *(%d*) kB"))
+    cached = tonumber(stdout:match("Cached: *(%d*) kB"))
+    sreclaimable = tonumber(stdout:match("SReclaimable: *(%d*) kB"))
 
-    awesome.emit_signal("status::memory", memory)
+    memory = (mem_total + shmem - mem_free - buffers - cached - sreclaimable) / 1024
+
+    awesome.emit_signal("status::memory", math.floor(memory))
 end)
