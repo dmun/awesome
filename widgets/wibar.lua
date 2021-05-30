@@ -12,12 +12,14 @@ local mysystray = require("widgets.systray")
 local mybattery = require("widgets.battery")
 local mynetwork = require("widgets.network")
 local mymemory = require("widgets.memory")
+local mycpu = require("widgets.cpu")
 local mytextclock = require("widgets.textclock")
 
 -- Activated widgets
 local right_widgets = {
     mysystray,
     mymemory,
+    mycpu,
     mybattery,
     mynetwork,
     mytextclock
