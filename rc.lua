@@ -226,6 +226,22 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
+function change_client_state(state)
+    client.focus.fullscreen = false
+    if (state == "default") then
+        client.focus.maximized = false
+        client.focus.floating = false
+        client.focus.ontop = false
+    elseif (state == "floating") then
+        client.focus.floating = true
+        client.focus.ontop = true
+    elseif (state == "maximized") then
+        client.focus.maximized = true
+    elseif (state == "fullscreen") then
+        client.focus.fullscreen = true
+    end
+end
+
 -- Autostart
 awful.spawn.with_shell("xset r rate 200 60")
 awful.spawn.with_shell("sxhkd")
