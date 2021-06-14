@@ -228,16 +228,15 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 function change_client_state(state)
     client.focus.fullscreen = false
-    if (state == "default") then
-        client.focus.maximized = false
-        client.focus.floating = false
-        client.focus.ontop = false
-    elseif (state == "floating") then
+    client.focus.maximized = false
+    client.focus.ontop = false
+    client.focus.floating = false
+    if state == "floating" or state == "stacking" then
         client.focus.floating = true
         client.focus.ontop = true
-    elseif (state == "maximized") then
+    elseif state == "maximized" then
         client.focus.maximized = true
-    elseif (state == "fullscreen") then
+    elseif state == "fullscreen" then
         client.focus.fullscreen = true
     end
 end
