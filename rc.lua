@@ -196,20 +196,7 @@ end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
-    -- buttons for the titlebar
-    -- local buttons = gears.table.join(
-    --     awful.button({ }, 1, function()
-    --         c:emit_signal("request::activate", "titlebar", {raise = true})
-    --         awful.mouse.client.move(c)
-    --     end),
-    --     awful.button({ }, 3, function()
-    --         c:emit_signal("request::activate", "titlebar", {raise = true})
-    --         awful.mouse.client.resize(c)
-    --     end)
-    -- )
-
-    positions = { "top", "right", "bottom", "left" }
-
+    local positions = { "top", "right", "bottom", "left" }
     for i = 1, 4 do
         awful.titlebar(c, { position = positions[i], size = 2, bg_focus = "#3c3c3c", bg_normal = "#303030" }) : setup {
             layout = wibox.layout.align.horizontal
@@ -236,7 +223,9 @@ function change_client_state(state)
         client.focus.ontop = true
     elseif state == "maximized" then
         client.focus.maximized = true
+        client.focus.ontop = true
     elseif state == "fullscreen" then
+        client.focus.ontop = true
         client.focus.fullscreen = true
     end
 end
