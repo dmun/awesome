@@ -33,6 +33,11 @@ theme.border_normal = "#000000"
 theme.border_focus  = "#000000"
 theme.border_marked = "#91231c"
 
+theme.notification_font = "sans 11"
+theme.notification_margin = 100
+theme.notification_spacing = dpi(15)
+theme.notification_border_width = 2
+
 -- Generate taglist squares:
 -- local taglist_square_size = dpi(4)
 -- theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
