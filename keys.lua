@@ -36,6 +36,20 @@ clientbuttons =
     )
 )
 
+globalkeys = gears.table.join(
+	awful.key({ modkey }, "r",
+		function ()
+			local c = awful.client.restore()
+			-- Focus restored client
+			if c then
+				c:emit_signal(
+					"request::activate", "key.unminimize", {raise = true}
+				)
+			end
+		end,
+	{ description = "restore minimized", group = "client" })
+)
+
 -- Set keys
 root.keys(globalkeys)
 -- }}}
