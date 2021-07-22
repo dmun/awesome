@@ -1,5 +1,6 @@
 -- Standard awesome library
 local gears = require("gears")
+local gsurface = require("gears.surface")
 local awful = require("awful")
 require("awful.autofocus")
 -- Widget and layout library
@@ -11,6 +12,42 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 
 local wibar = require("widgets.wibar")
+local floor = math.floor
+local gcolor = require('gears.color')
+local lgi = require("lgi")
+local cairo = lgi.cairo
+local gdk = lgi.Gdk
+local get_default_root_window = gdk.get_default_root_window
+local pixbuf_get_from_surface = gdk.pixbuf_get_from_surface
+
+local function lighten(color, amount)
+    local r, g, b
+    r, g, b = gcolor.parse_color(color)
+    r = 255 * r
+    g = 255 * g
+    b = 255 * b
+    r = r + floor(2.55 * amount)
+    g = g + floor(2.55 * amount)
+    b = b + floor(2.55 * amount)
+    r = r > 255 and 255 or r
+    g = g > 255 and 255 or g
+    b = b > 255 and 255 or b
+    return ("#%02x%02x%02x"):format(r, g, b)
+end
+
+
+local function reset_titlebar_color()
+	local client = client.focus
+	local mode = require('titlebar')(client)
+    local focus = lighten(mode, 10)
+    local normal = lighten(mode, 5)
+    local positions = { "top", "right", "bottom", "left" }
+    for i = 1, 4 do
+        awful.titlebar(client, { position = positions[i], size = 2, bg_focus = focus, bg_normal = normal }) : setup {
+            layout = wibox.layout.align.horizontal
+        }
+    end
+end
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -196,12 +233,12 @@ end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
-    local positions = { "top", "right", "bottom", "left" }
-    for i = 1, 4 do
-        awful.titlebar(c, { position = positions[i], size = 2, bg_focus = "#3c3c3c", bg_normal = "#303030" }) : setup {
-            layout = wibox.layout.align.horizontal
-        }
-    end
+	local positions = { "top", "right", "bottom", "left" }
+	for i = 1, 4 do
+		awful.titlebar(c, { position = positions[i], size = 2, bg_focus = "#3c3c3c", bg_normal = "#303030" }) : setup {
+			layout = wibox.layout.align.horizontal
+		}
+	end
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
@@ -228,6 +265,7 @@ function change_client_state(state)
         client.focus.ontop = true
         client.focus.fullscreen = true
     end
+	reset_titlebar_color()
 end
 
 -- Autostart
