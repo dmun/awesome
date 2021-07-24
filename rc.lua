@@ -194,7 +194,7 @@ client.connect_signal("request::titlebars", function(c)
 	local client_color = {}
 
 	if file ~= nil then
-		client_color = json.decode(file:read("*all"))[c.class]
+		client_color = json.decode(file:read("*all"))[c.class] or { focus = "#3c3c3c", normal = "#303030" }
 		file:close()
 	end
 
@@ -203,8 +203,8 @@ client.connect_signal("request::titlebars", function(c)
 		awful.titlebar(c, {
 				position = positions[i],
 				size = 2,
-				bg_focus = client_color["focus"] or "#3c3c3c",
-				bg_normal = client_color["normal"] or "#303030",
+				bg_focus = client_color["focus"],
+				bg_normal = client_color["normal"],
 			}) : setup {
 			layout = wibox.layout.align.horizontal
 		}
