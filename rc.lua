@@ -193,7 +193,7 @@ client.connect_signal("request::titlebars", function(c)
 	local file = io.open(string.format("%s/.config/awesome/client_color.json", os.getenv("HOME")), "rb")
 	local client_color = {}
 
-	if file == not nil then
+	if file ~= nil then
 		client_color = json.decode(file:read("*all"))[c.class]
 		file:close()
 	end
