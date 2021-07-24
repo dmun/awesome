@@ -35,15 +35,32 @@ local function lighten(color, amount)
     return ("#%02x%02x%02x"):format(r, g, b)
 end
 
+local json = require("util.json")
 
-local function reset_titlebar_color()
-	local client = client.focus
-	local mode = require('titlebar')(client)
+local function reset_client_color(c, focus, normal)
+	local read_file = io.open(string.format("%s/.config/awesome/client_color.json", os.getenv("HOME")), "rb")
+	local client_colors = json.decode(read_file:read("*all"))
+	read_file:close()
+
+	client_colors[c.class] = {
+		["focus"] = focus,
+		["normal"] = normal,
+	}
+
+	local write_file = io.open(string.format("%s/.config/awesome/client_color.json", os.getenv("HOME")), "w")
+	write_file:write(json.encode(client_colors))
+	write_file:close()
+end
+
+function reset_titlebar_color()
+	local c = client.focus
+	local mode = require('titlebar')(c)
     local focus = lighten(mode, 10)
     local normal = lighten(mode, 5)
+	reset_client_color(c, focus, normal)
     local positions = { "top", "right", "bottom", "left" }
     for i = 1, 4 do
-        awful.titlebar(client, { position = positions[i], size = 2, bg_focus = focus, bg_normal = normal }) : setup {
+        awful.titlebar(c, { position = positions[i], size = 2, bg_focus = focus, bg_normal = normal }) : setup {
             layout = wibox.layout.align.horizontal
         }
     end
@@ -173,9 +190,22 @@ end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
+	local file = io.open(string.format("%s/.config/awesome/client_color.json", os.getenv("HOME")), "rb")
+	local client_color = {}
+
+	if file == not nil then
+		client_color = json.decode(file:read("*all"))[c.class]
+		file:close()
+	end
+
 	local positions = { "top", "right", "bottom", "left" }
 	for i = 1, 4 do
-		awful.titlebar(c, { position = positions[i], size = 2, bg_focus = "#3c3c3c", bg_normal = "#303030" }) : setup {
+		awful.titlebar(c, {
+				position = positions[i],
+				size = 2,
+				bg_focus = client_color["focus"] or "#3c3c3c",
+				bg_normal = client_color["normal"] or "#303030",
+			}) : setup {
 			layout = wibox.layout.align.horizontal
 		}
 	end
@@ -205,7 +235,6 @@ function change_client_state(state)
         client.focus.ontop = true
         client.focus.fullscreen = true
     end
-	reset_titlebar_color()
 end
 
 -- Autostart
