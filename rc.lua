@@ -37,17 +37,19 @@ end
 
 local json = require("util.json")
 
-local function reset_client_color(c, focus, normal)
-	local read_file = io.open(string.format("%s/.config/awesome/client_color.json", os.getenv("HOME")), "rb")
+local function reset_client_color(c, focus, focus_top, normal, normal_top)
+	local read_file = io.open(string.format("%s/.config/awesome/client_colors.json", os.getenv("HOME")), "rb")
 	local client_colors = json.decode(read_file:read("*all"))
 	read_file:close()
 
 	client_colors[c.class] = {
 		["focus"] = focus,
 		["normal"] = normal,
+		["focus_top"] = focus_top,
+		["normal_top"] = normal_top,
 	}
 
-	local write_file = io.open(string.format("%s/.config/awesome/client_color.json", os.getenv("HOME")), "w")
+	local write_file = io.open(string.format("%s/.config/awesome/client_colors.json", os.getenv("HOME")), "w")
 	write_file:write(json.encode(client_colors))
 	write_file:close()
 end
@@ -56,10 +58,15 @@ function reset_titlebar_color()
 	local c = client.focus
 	local mode = require('titlebar')(c)
     local focus = lighten(mode, 10)
+    local focus_top = lighten(mode, 15)
     local normal = lighten(mode, 5)
-	reset_client_color(c, focus, normal)
+    local normal_top = lighten(mode, 8)
+	reset_client_color(c, focus, focus_top, normal, normal_top)
     local positions = { "top", "right", "bottom", "left" }
-    for i = 1, 4 do
+	awful.titlebar(c, { position = positions[1], size = 2, bg_focus = focus_top, bg_normal = normal_top }) : setup {
+		layout = wibox.layout.align.horizontal
+	}
+    for i = 2, 4 do
         awful.titlebar(c, { position = positions[i], size = 2, bg_focus = focus, bg_normal = normal }) : setup {
             layout = wibox.layout.align.horizontal
         }
@@ -190,7 +197,7 @@ end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
-	local file = io.open(string.format("%s/.config/awesome/client_color.json", os.getenv("HOME")), "rb")
+	local file = io.open(string.format("%s/.config/awesome/client_colors.json", os.getenv("HOME")), "rb")
 	local client_color = {}
 
 	if file ~= nil then
@@ -199,7 +206,15 @@ client.connect_signal("request::titlebars", function(c)
 	end
 
 	local positions = { "top", "right", "bottom", "left" }
-	for i = 1, 4 do
+	awful.titlebar(c, {
+			position = "top",
+			size = 2,
+			bg_focus = client_color["focus_top"],
+			bg_normal = client_color["normal_top"],
+		}) : setup {
+		layout = wibox.layout.align.horizontal
+	}
+	for i = 2, 4 do
 		awful.titlebar(c, {
 				position = positions[i],
 				size = 2,
