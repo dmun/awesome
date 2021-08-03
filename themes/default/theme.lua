@@ -13,15 +13,15 @@ theme.font          = "monospace 11"
 
 -- theme.bg_normal     = "#232831"
 -- theme.bg_focus      = "#2d333f"
-theme.bg_normal     = "#1a1a1a"
-theme.bg_focus      = "#062f4A"
+theme.bg_normal     = "#1b151c"
+theme.bg_focus      = "#221A25"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
 theme.systray_icon_spacing = 15
 
 theme.fg_normal     = "#ffffff"
-theme.taglist_fg_empty = "#555555"
+theme.taglist_fg_empty = "#4a3a51"
 theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"

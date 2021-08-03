@@ -58,9 +58,9 @@ function reset_titlebar_color()
 	local c = client.focus
 	local mode = require('titlebar')(c)
     local focus = lighten(mode, 10)
-    local focus_top = lighten(mode, 15)
+    local focus_top = lighten(mode, 20)
     local normal = lighten(mode, 5)
-    local normal_top = lighten(mode, 8)
+    local normal_top = lighten(mode, 10)
 	reset_client_color(c, focus, focus_top, normal, normal_top)
     local positions = { "top", "right", "bottom", "left" }
 	awful.titlebar(c, { position = positions[1], size = 2, bg_focus = focus_top, bg_normal = normal_top }) : setup {
@@ -151,8 +151,8 @@ local function set_wallpaper(s)
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)
         end
-        -- gears.wallpaper.maximized(wallpaper, s, true)
-        gears.wallpaper.set("#131313")
+        gears.wallpaper.maximized(wallpaper, s, true)
+        -- gears.wallpaper.set("#131313")
     end
 end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
@@ -253,5 +253,6 @@ function change_client_state(state)
 end
 
 -- Autostart
+awful.spawn.with_shell("feh --bg-fill ~/.config/awesome/themes/default/background.webp")
 awful.spawn.with_shell("xset r rate 200 60")
 awful.spawn.with_shell("sxhkd")
