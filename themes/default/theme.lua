@@ -9,12 +9,12 @@ local themes_path = "~/.config/awesome/themes/"
 
 local theme = {}
 
-theme.font          = "monospace 11"
+theme.font          = "monospace 10"
 
 -- theme.bg_normal     = "#232831"
 -- theme.bg_focus      = "#2d333f"
 theme.bg_normal     = "#1C1F24"
-theme.bg_focus      = "#0f1114"
+theme.bg_focus      = "#282C34"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal

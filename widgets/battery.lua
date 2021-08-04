@@ -27,9 +27,13 @@ awesome.connect_signal("status::battery", function(capacity, charging)
     for _, value in pairs(status_icon) do
         if capacity >= value[1] then
             if (charging == true) then
-                markup = value[3] .. markup
+                markup = "<span foreground='#5B6268'>" .. value[3] .. "</span>" .. markup
             else
-                markup = value[2] .. markup
+				if capacity <= 10 then
+					markup = "<span foreground='#E3605F'>" .. value[2] .. "</span>" .. markup
+				else
+					markup = "<span foreground='#5B6268'>" .. value[2] .. "</span>" .. markup
+				end
             end
             break
         end
