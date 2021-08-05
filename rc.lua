@@ -205,7 +205,6 @@ client.connect_signal("request::titlebars", function(c)
 		file:close()
 	end
 
-	local positions = { "top", "right", "bottom", "left" }
 	awful.titlebar(c, {
 			position = "top",
 			size = 2,
@@ -214,9 +213,10 @@ client.connect_signal("request::titlebars", function(c)
 		}) : setup {
 		layout = wibox.layout.align.horizontal
 	}
-	for i = 2, 4 do
+
+	for _,v in ipairs({ "right", "bottom", "left" }) do
 		awful.titlebar(c, {
-				position = positions[i],
+				position = v,
 				size = 2,
 				bg_focus = client_color["focus"],
 				bg_normal = client_color["normal"],
