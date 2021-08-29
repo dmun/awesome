@@ -1,77 +1,21 @@
 -- Standard awesome library
 local gears = require("gears")
-local gsurface = require("gears.surface")
 local awful = require("awful")
 require("awful.autofocus")
+
 -- Widget and layout library
 local wibox = require("wibox")
+
 -- Theme handling library
 local beautiful = require("beautiful")
+
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
 
 local wibar = require("widgets.wibar")
-local floor = math.floor
-local gcolor = require('gears.color')
-local lgi = require("lgi")
-local cairo = lgi.cairo
-local gdk = lgi.Gdk
-local get_default_root_window = gdk.get_default_root_window
-local pixbuf_get_from_surface = gdk.pixbuf_get_from_surface
-
-local function lighten(color, amount)
-    local r, g, b
-    r, g, b = gcolor.parse_color(color)
-    r = 255 * r
-    g = 255 * g
-    b = 255 * b
-    r = r + floor(2.55 * amount)
-    g = g + floor(2.55 * amount)
-    b = b + floor(2.55 * amount)
-    r = r > 255 and 255 or r
-    g = g > 255 and 255 or g
-    b = b > 255 and 255 or b
-    return ("#%02x%02x%02x"):format(r, g, b)
-end
-
 local json = require("util.json")
-
-local function reset_client_color(c, focus, focus_top, normal, normal_top)
-	local read_file = io.open(string.format("%s/.config/awesome/client_colors.json", os.getenv("HOME")), "rb")
-	local client_colors = json.decode(read_file:read("*all"))
-	read_file:close()
-
-	client_colors[c.class] = {
-		["focus"] = focus,
-		["normal"] = normal,
-		["focus_top"] = focus_top,
-		["normal_top"] = normal_top,
-	}
-
-	local write_file = io.open(string.format("%s/.config/awesome/client_colors.json", os.getenv("HOME")), "w")
-	write_file:write(json.encode(client_colors))
-	write_file:close()
-end
-
-function reset_titlebar_color()
-	local c = client.focus
-	local mode = require('titlebar')(c)
-    local focus = lighten(mode, 10)
-    local focus_top = lighten(mode, 20)
-    local normal = lighten(mode, 5)
-    local normal_top = lighten(mode, 10)
-	reset_client_color(c, focus, focus_top, normal, normal_top)
-    local positions = { "top", "right", "bottom", "left" }
-	awful.titlebar(c, { position = positions[1], size = 2, bg_focus = focus_top, bg_normal = normal_top }) : setup {
-		layout = wibox.layout.align.horizontal
-	}
-    for i = 2, 4 do
-        awful.titlebar(c, { position = positions[i], size = 2, bg_focus = focus, bg_normal = normal }) : setup {
-            layout = wibox.layout.align.horizontal
-        }
-    end
-end
+local keys = require("keys")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -110,8 +54,8 @@ editor_cmd = terminal .. " -e " .. editor
 
 -- Layouts.
 awful.layout.layouts = {
-    awful.layout.suit.tile,
-    awful.layout.suit.tile.bottom,
+    awful.layout.suit.tile.right,
+    awful.layout.suit.tile.left,
 }
 -- }}}
 
@@ -176,9 +120,8 @@ root.buttons(gears.table.join(
 ))
 -- }}}
 
-require("keys")
-
-require("rules")
+root.keys(keys.globalkeys)
+awful.rules.rules = require("rules")
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
@@ -207,7 +150,7 @@ client.connect_signal("request::titlebars", function(c)
 
 	awful.titlebar(c, {
 			position = "top",
-			size = 2,
+			size = beautiful.inner_border_width,
 			bg_focus = client_color["focus_top"],
 			bg_normal = client_color["normal_top"],
 		}) : setup {
@@ -217,7 +160,7 @@ client.connect_signal("request::titlebars", function(c)
 	for _,v in ipairs({ "right", "bottom", "left" }) do
 		awful.titlebar(c, {
 				position = v,
-				size = 2,
+				size = beautiful.inner_border_width,
 				bg_focus = client_color["focus"],
 				bg_normal = client_color["normal"],
 			}) : setup {
@@ -254,5 +197,5 @@ end
 
 -- Autostart
 awful.spawn.with_shell("feh --bg-fill ~/.config/awesome/themes/default/background.webp")
-awful.spawn.with_shell("xset r rate 200 60")
+awful.spawn.with_shell("xset r rate 225 33")
 awful.spawn.with_shell("sxhkd")

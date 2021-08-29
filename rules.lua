@@ -1,7 +1,10 @@
 local awful = require("awful")
 local beautiful = require("beautiful")
+local keys = require("keys")
 
-awful.rules.rules = {
+local M = {}
+
+M = {
 	-- All clients will match this rule.
 	{ rule = { },
 		properties = {
@@ -10,7 +13,7 @@ awful.rules.rules = {
 			focus = awful.client.focus.filter,
 			raise = true,
 			keys = clientkeys,
-			buttons = clientbuttons,
+			buttons = keys.clientbuttons,
 			screen = awful.screen.preferred,
 			placement = awful.placement.no_overlap+awful.placement.no_offscreen
 		}
@@ -56,3 +59,5 @@ awful.rules.rules = {
 		}
 	}, properties = { titlebars_enabled = true } },
 }
+
+return M

@@ -1,15 +1,31 @@
 local gears = require("gears")
 local awful = require("awful")
 
+local M = {}
+
 -- Default modkey.
 modkey = "Mod4"
 
 -- {{{ Key bindings
-globalkeys = gears.table.join()
+M.globalkeys = gears.table.join(
+	awful.key({ modkey, "alt"   }, "q", awesome.quit,
+              {description = "quit awesome", group = "awesome"}),
+	awful.key({ modkey }, "r",
+		function ()
+			local c = awful.client.restore()
+			-- Focus restored client
+			if c then
+				c:emit_signal(
+					"request::activate", "key.unminimize", {raise = true}
+				)
+			end
+		end,
+	{ description = "restore minimized", group = "client" })
+)
 
-clientkeys = gears.table.join()
+M.clientkeys = gears.table.join()
 
-clientbuttons =
+M.clientbuttons =
     gears.table.join(
     awful.button(
         {},
@@ -36,20 +52,4 @@ clientbuttons =
     )
 )
 
-globalkeys = gears.table.join(
-	awful.key({ modkey }, "r",
-		function ()
-			local c = awful.client.restore()
-			-- Focus restored client
-			if c then
-				c:emit_signal(
-					"request::activate", "key.unminimize", {raise = true}
-				)
-			end
-		end,
-	{ description = "restore minimized", group = "client" })
-)
-
--- Set keys
-root.keys(globalkeys)
--- }}}
+return M
