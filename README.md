@@ -62,6 +62,8 @@ This repository is nowhere near done or anything, so don't expect it to always b
 ## References
 These are some repositories that have helped me out.
 
+[tommy-turtle's wallpapers](https://www.reddit.com/gallery/oum2ie)
+
 [elenapan's dotfiles](https://github.com/elenapan/dotfiles)
 
 [mut-ex' nice (window decorations)](https://github.com/mut-ex/awesome-wm-nice)
