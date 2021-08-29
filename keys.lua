@@ -8,7 +8,7 @@ modkey = "Mod4"
 
 -- {{{ Key bindings
 M.globalkeys = gears.table.join(
-	awful.key({ modkey, "alt"   }, "q", awesome.quit,
+	awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
 	awful.key({ modkey }, "r",
 		function ()
