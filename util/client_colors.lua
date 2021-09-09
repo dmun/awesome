@@ -82,10 +82,10 @@ function M.update()
 	local color = M.get_dominant(c)
 
 	-- Lighten the colors
-    local focus = colors.lighten(color, 10)
-    local focus_top = colors.lighten(color, 20)
-    local normal = colors.lighten(color, 5)
-    local normal_top = colors.lighten(color, 10)
+    local focus = colors.lighten(color, 15)
+    local focus_top = colors.lighten(color, 30)
+    local normal = colors.lighten(color, 10)
+    local normal_top = colors.lighten(color, 20)
 
 	M.save(c, focus, focus_top, normal, normal_top)
 

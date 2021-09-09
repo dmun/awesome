@@ -4,7 +4,7 @@ local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
 local widget_padding = 20
-local wibar_height = 24
+local wibar_height = 22
 
 -- Widget imports
 local mytaglist = require("widgets.taglist")
