@@ -13,7 +13,7 @@ awesome.connect_signal("status::network", function(state)
     if (state == "UP") then
         text = ""
     else
-        text = ""
+        text = "睊"
     end
 
     network.text = text

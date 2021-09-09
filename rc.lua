@@ -144,7 +144,7 @@ client.connect_signal("request::titlebars", function(c)
 	local client_color = {}
 
 	if file ~= nil then
-		client_color = json.decode(file:read("*all"))[c.class] or { focus = "#3c3c3c", normal = "#303030" }
+		client_color = json.decode(file:read("*all"))[c.class] or { focus = "#3c3c3c", normal = "#303030", focus_top = "#3c3c3c", normal_top = "#303030" }
 		file:close()
 	end
 
