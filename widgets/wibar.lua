@@ -1,25 +1,35 @@
 local awful = require("awful")
 local wibox = require("wibox")
+local beautiful = require("beautiful")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
 local widget_padding = 20
-local wibar_height = 22
+local wibar_height = 24
 
 -- Widget imports
-local mytaglist = require("widgets.taglist")
-local mysystray = require("widgets.systray")
-local mybattery = require("widgets.battery")
-local mynetwork = require("widgets.network")
-local mymemory = require("widgets.memory")
-local mycpu = require("widgets.cpu")
-local mytextclock = require("widgets.textclock")
+local mytaglist   = require "widgets.taglist"
+local mysystray   = require "widgets.systray"
+local mybattery   = require "widgets.battery"
+local mynetwork   = require "widgets.network"
+local mymemory    = require "widgets.memory"
+local mycpu       = require "widgets.cpu"
+local mytextclock = require "widgets.textclock"
 
 -- Activated widgets
+local left_widgets = {
+    wibox.widget {
+        markup = "",
+        widget = wibox.widget.textbox,
+    },
+}
+
+local middle_widgets = {}
+
 local right_widgets = {
     mysystray,
-    mymemory,
-    mycpu,
+    -- mymemory,
+    -- mycpu,
     mybattery,
     mynetwork,
     mytextclock
@@ -39,7 +49,11 @@ function wibar.get(s)
     -- TODO modular left widgets
     local left = {
         layout = wibox.layout.fixed.horizontal,
-        taglist
+    }
+
+    local middle = {
+        layout = wibox.layout.fixed.horizontal,
+        taglist,
     }
 
     local right = {
@@ -51,25 +65,42 @@ function wibar.get(s)
             v,
             left = widget_padding,
             right = widget_padding,
-            widget = wibox.container.margin
+            widget = wibox.container.margin,
+        })
+    end
+
+    for _,v in ipairs(middle_widgets) do
+        middle[#middle+1] = ({
+            v,
+            left = widget_padding,
+            right = widget_padding,
+            widget = wibox.container.margin,
+        })
+    end
+
+    for _,v in ipairs(left_widgets) do
+        left[#left+1] = ({
+            v,
+            left = widget_padding,
+            right = widget_padding,
+            widget = wibox.container.margin,
         })
     end
 
     -- Add widgets to the wibox
     mywibox:setup {
         layout = wibox.layout.align.horizontal,
+        expand = "none",
         { -- Left widgets
             left,
-            -- left = 20,
-            right = 10,
             widget = wibox.container.margin
         },
         { -- Middle widgets
+            middle,
             layout = wibox.layout.align.horizontal,
         },
         { -- Right widgets
             right,
-            right = 10,
             widget = wibox.container.margin
         }
     }

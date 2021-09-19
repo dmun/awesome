@@ -96,7 +96,7 @@ local function set_wallpaper(s)
             wallpaper = wallpaper(s)
         end
         -- gears.wallpaper.maximized(wallpaper, s, true)
-        gears.wallpaper.set("#181a1e")
+        gears.wallpaper.set("#1d2026")
     end
 end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
@@ -107,9 +107,15 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "", "", "", "", "" }, s, awful.layout.layouts[1])
+    awful.tag({ "ﱢ", "ﱢ", "ﱢ", "ﱢ", "ﱢ", "ﱢ" }, s, awful.layout.layouts[1])
 
     wibar.get(s)
+    awful.wibar({
+        screen = s,
+        position = "top",
+        height = 2,
+        bg = "#181a23",
+    })
 end)
 
 -- {{{ Mouse bindings
