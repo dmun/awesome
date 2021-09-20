@@ -1,13 +1,12 @@
 local awful = require("awful")
 local wibox = require("wibox")
-local beautiful = require("beautiful")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
-local widget_padding = 20
+local widget_padding = 18
 local wibar_height = 24
 
--- Widget imports
+-- Widgets
 local mytaglist   = require "widgets.taglist"
 local mysystray   = require "widgets.systray"
 local mybattery   = require "widgets.battery"
@@ -15,6 +14,7 @@ local mynetwork   = require "widgets.network"
 local mymemory    = require "widgets.memory"
 local mycpu       = require "widgets.cpu"
 local mytextclock = require "widgets.textclock"
+local mykblayout  = awful.widget.keyboardlayout()
 
 -- Activated widgets
 local left_widgets = {
@@ -30,8 +30,9 @@ local right_widgets = {
     mysystray,
     -- mymemory,
     -- mycpu,
+    mykblayout,
     mybattery,
-    mynetwork,
+    -- mynetwork,
     mytextclock
 }
 

@@ -28,7 +28,7 @@ theme.fg_minimize   = "#ffffff"
 
 theme.gap_single_client = false
 theme.useless_gap   = dpi(5)
-theme.border_width  = 0
+theme.border_width  = 1
 theme.inner_border_width  = 2
 theme.border_normal = "#000000"
 theme.border_focus  = "#000000"
@@ -44,6 +44,7 @@ theme.menu_height = dpi(15)
 theme.menu_width  = dpi(100)
 
 theme.wallpaper = themes_path .. "default/background.png"
+theme.wallpaper_color = "#1b1e23"
 theme.icon_theme = nil
 
 return theme
