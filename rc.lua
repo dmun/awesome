@@ -7,15 +7,8 @@ local rules     = require("rules")
 local wibar     = require("widgets.wibar")
 local json      = require("util.json")
 local keys      = require("keys")
+local config    = require("config")
 require("awful.autofocus")
-
--- Autostart
-local autostart = {
-    "feh --bg-fill ~/.config/awesome/themes/default/background.webp",
-    "xset r rate 225 33",
-    "sxhkd",
-    "nm-applet",
-}
 
 do
     -- Error handling
@@ -80,7 +73,7 @@ awful.screen.connect_for_each_screen(function(s)
     wibar.get(s)
     awful.wibar({
         screen = s,
-        position = "top",
+        position = config.bar.position,
         height = 2,
         bg = "#181a23",
     })
@@ -138,13 +131,15 @@ client.connect_signal("request::titlebars", function(c)
 end)
 
 -- Sloppy focus
-client.connect_signal("mouse::enter", function(c)
-    c:emit_signal("request::activate", "mouse_enter", {raise = false})
-end)
+if config.sloppy_focus then
+    client.connect_signal("mouse::enter", function(c)
+        c:emit_signal("request::activate", "mouse_enter", {raise = false})
+    end)
+end
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus c:raise() end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
-for _,v in pairs(autostart) do
+for _,v in pairs(config.autostart) do
     awful.spawn.with_shell(v)
 end

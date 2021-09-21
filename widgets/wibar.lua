@@ -1,107 +1,58 @@
-local awful = require("awful")
-local wibox = require("wibox")
+local awful      = require("awful")
+local wibox      = require("wibox")
 local xresources = require("beautiful.xresources")
-local dpi = xresources.apply_dpi
-
-local widget_padding = 18
-local wibar_height = 24
-
--- Widgets
-local mytaglist   = require "widgets.taglist"
-local mysystray   = require "widgets.systray"
-local mybattery   = require "widgets.battery"
-local mynetwork   = require "widgets.network"
-local mymemory    = require "widgets.memory"
-local mycpu       = require "widgets.cpu"
-local mytextclock = require "widgets.textclock"
-local mykblayout  = awful.widget.keyboardlayout()
-
--- Activated widgets
-local left_widgets = {
-    wibox.widget {
-        markup = "",
-        widget = wibox.widget.textbox,
-    },
-}
-
-local middle_widgets = {}
-
-local right_widgets = {
-    mysystray,
-    -- mymemory,
-    -- mycpu,
-    mykblayout,
-    mybattery,
-    -- mynetwork,
-    mytextclock
-}
+local dpi        = xresources.apply_dpi
+local config     = require("config")
 
 local wibar = {}
 
 function wibar.get(s)
     local mywibox = awful.wibar({
-        position = "top",
+        position = config.bar.position,
         screen = s,
-        height = dpi(wibar_height)
+        height = dpi(config.bar.height)
     })
 
-    local taglist = mytaglist.get(s)
+    local taglist = require("widgets.taglist").get(s)
 
-    -- TODO modular left widgets
-    local left = {
-        layout = wibox.layout.fixed.horizontal,
+    local widgets = {
+        left = {
+            layout = wibox.layout.fixed.horizontal,
+        },
+        middle = {
+            layout = wibox.layout.fixed.horizontal,
+            taglist,
+        },
+        right = {
+            layout = wibox.layout.fixed.horizontal,
+        },
     }
 
-    local middle = {
-        layout = wibox.layout.fixed.horizontal,
-        taglist,
-    }
-
-    local right = {
-        layout = wibox.layout.fixed.horizontal,
-    }
-
-    for _,v in ipairs(right_widgets) do
-        right[#right+1] = ({
-            v,
-            left = widget_padding,
-            right = widget_padding,
-            widget = wibox.container.margin,
-        })
-    end
-
-    for _,v in ipairs(middle_widgets) do
-        middle[#middle+1] = ({
-            v,
-            left = widget_padding,
-            right = widget_padding,
-            widget = wibox.container.margin,
-        })
-    end
-
-    for _,v in ipairs(left_widgets) do
-        left[#left+1] = ({
-            v,
-            left = widget_padding,
-            right = widget_padding,
-            widget = wibox.container.margin,
-        })
+    for k,_ in pairs(config.bar.widgets) do
+        for _,v in pairs(config.bar.widgets[k]) do
+            widgets[k][#widgets[k]+1] = ({
+                v,
+                left = config.bar.widget_padding,
+                right = config.bar.widget_padding,
+                widget = wibox.container.margin,
+            })
+        end
     end
 
     -- Add widgets to the wibox
     mywibox:setup {
         layout = wibox.layout.align.horizontal,
         expand = "none",
-        { -- Left widgets
-            left,
+        {
+            widgets.left,
             widget = wibox.container.margin
         },
-        { -- Middle widgets
-            middle,
+        {
+            widgets.middle,
             layout = wibox.layout.align.horizontal,
         },
-        { -- Right widgets
-            right,
+        {
+            widgets.right,
             widget = wibox.container.margin
         }
     }
