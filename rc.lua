@@ -75,7 +75,7 @@ awful.screen.connect_for_each_screen(function(s)
         screen = s,
         position = config.bar.position,
         height = 2,
-        bg = "#181a23",
+        bg = "#13181c",
     })
 end)
 

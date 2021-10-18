@@ -1,6 +1,6 @@
-local awful = require("awful")
+local awful     = require("awful")
 local beautiful = require("beautiful")
-local keys = require("keys")
+local keys      = require("keys")
 
 local M = {}
 
@@ -8,7 +8,7 @@ M = {
 	-- All clients will match this rule.
 	{ rule = { },
 		properties = {
-			border_width = beautiful.border_width,
+			border_width = 1,
 			border_color = beautiful.border_normal,
 			focus = awful.client.focus.filter,
 			raise = true,

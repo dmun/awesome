@@ -83,7 +83,7 @@ function M.update()
 
 	-- Lighten the colors
     local focus = colors.lighten(color, 15)
-    local focus_top = colors.lighten(color, 15)
+    local focus_top = colors.lighten(color, 25)
     local normal = colors.lighten(color, 10)
     local normal_top = colors.lighten(color, 10)
 

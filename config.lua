@@ -15,6 +15,7 @@ return {
                     markup = "",
                     widget = require("wibox").widget.textbox,
                 },
+                require("widgets.client_name"),
             },
             middle = {},
             right = {
