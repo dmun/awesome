@@ -69,13 +69,13 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
-    awful.tag({ "ﱢ", "ﱢ", "ﱢ", "ﱢ", "ﱢ", "ﱢ" }, s, awful.layout.layouts[1])
+    awful.tag({ "", "", "", "", "", "" }, s, awful.layout.layouts[1])
     wibar.get(s)
     awful.wibar({
         screen = s,
         position = config.bar.position,
-        height = 2,
-        bg = "#13181c",
+        height = 1,
+        bg = "#000000",
     })
 end)
 

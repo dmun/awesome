@@ -27,12 +27,13 @@ theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
 theme.gap_single_client = false
-theme.useless_gap   = dpi(5)
+theme.useless_gap   = dpi(7)
 theme.border_width  = 1
-theme.inner_border_width  = 2
+theme.inner_border_width  = 0
+theme.border_normal = "#13181c"
 theme.border_normal = "#000000"
-theme.border_focus  = "#000000"
--- theme.border_focus  = "#9177ac"
+--theme.border_focus  = "#000000"
+theme.border_focus  = "#a9a1e1"
 theme.border_marked = "#91231c"
 
 theme.notification_font = "sans 11"
