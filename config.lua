@@ -1,6 +1,6 @@
 return {
     autostart = {
-        "feh --bg-fill ~/.config/awesome/themes/default/background.webp",
+        "~/.fehbg",
         "xset r rate 225 33",
         "sxhkd",
         "nm-applet",
