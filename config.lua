@@ -4,11 +4,12 @@ return {
         "xset r rate 225 33",
         "sxhkd",
         "nm-applet",
+        "killall redshift-gtk; redshift-gtk -l 52.3:4.8",
     },
     bar = {
         position = "top",
         widget_padding = 18,
-        height = 24,
+        height = 28,
         widgets = {
             left = {
                 require("wibox").widget {
