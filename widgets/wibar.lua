@@ -14,12 +14,16 @@ function wibar.get(s)
     })
 
     local taglist = require("widgets.taglist").get(s)
+    table.insert(config.bar.widgets.left, taglist)
 
     local widgets = {
         left = {
             {
-                taglist,
-                left = 5,
+                {
+                    text = " ",
+                    widget = wibox.widget.textbox
+                },
+                left = dpi(18),
                 widget = wibox.container.margin
             },
             layout = wibox.layout.fixed.horizontal,
