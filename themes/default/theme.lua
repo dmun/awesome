@@ -4,17 +4,18 @@
 
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
+local gears = require("gears")
 
 local themes_path = "~/.config/awesome/themes/"
 
 local theme = {}
 
-theme.font          = "monospace 8"
+theme.font          = "JetBrainsMono Nerd Font Medium 8"
 
 -- theme.bg_normal     = "#232831"
 -- theme.bg_focus      = "#2d333f"
-theme.bg_normal     = "#21242b"
-theme.bg_focus      = "#181a23"
+theme.bg_normal     = "#1d2026"
+theme.bg_focus      = "#dddddd"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
@@ -22,17 +23,17 @@ theme.systray_icon_spacing = 15
 
 theme.fg_normal     = "#dddddd"
 theme.taglist_fg_empty = "#5B6268"
-theme.fg_focus      = "#dddddd"
+theme.taglist_bg_occupied = "#2b313b"
+theme.taglist_shape = require("util.shape").rounded_rect(dpi(2))
+theme.fg_focus      = "#21242b"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
 theme.gap_single_client = false
-theme.useless_gap   = dpi(7)
+theme.useless_gap   = dpi(6)
 theme.border_width  = 1
 theme.inner_border_width  = 0
-theme.border_normal = "#13181c"
 theme.border_normal = "#000000"
---theme.border_focus  = "#000000"
 theme.border_focus  = "#a9a1e1"
 theme.border_marked = "#91231c"
 

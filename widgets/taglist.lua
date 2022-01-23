@@ -2,11 +2,12 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local xresources = require("beautiful.xresources")
+local beautiful = require("beautiful")
 local dpi = xresources.apply_dpi
 
 local taglist = {}
 
-local taglist_padding = 12
+local taglist_padding = 8
 
 local taglist_buttons = gears.table.join(
     awful.button({ }, 1, function(t) t:view_only() end),
@@ -29,21 +30,27 @@ local taglist_buttons = gears.table.join(
 function taglist.get(s)
     local widget = awful.widget.taglist {
         screen  = s,
-        filter  = awful.widget.taglist.filter.all,
+        filter  = function (t) return t.selected or #t:clients() > 0 end,
         widget_template = {
             {
                 {
-                    id = 'text_role',
-                    widget = wibox.widget.textbox
+                    {
+                        id = 'text_role',
+                        widget = wibox.widget.textbox
+                    },
+                    left = dpi(taglist_padding),
+                    right = dpi(taglist_padding),
+                    widget = wibox.container.margin
                 },
-                left = dpi(taglist_padding),
-                right = dpi(taglist_padding),
-                widget = wibox.container.margin
+                id = 'background_role',
+                widget = wibox.container.background
             },
-            id = 'background_role',
-            widget = wibox.container.background
-        },
-        buttons = taglist_buttons
+            top = 6,
+            bottom = 6,
+            left = 5,
+            right = 5,
+            widget = wibox.container.margin
+        }
     }
 
     return widget

@@ -1,0 +1,10 @@
+{
+    "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+    "Lua.diagnostics.globals": [
+        "awesome",
+        "root",
+        "screen",
+        "hotkeys_popup",
+        "client"
+    ]
+}

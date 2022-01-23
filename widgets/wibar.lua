@@ -17,11 +17,15 @@ function wibar.get(s)
 
     local widgets = {
         left = {
+            {
+                taglist,
+                left = 5,
+                widget = wibox.container.margin
+            },
             layout = wibox.layout.fixed.horizontal,
         },
         middle = {
             layout = wibox.layout.fixed.horizontal,
-            taglist,
         },
         right = {
             layout = wibox.layout.fixed.horizontal,
@@ -30,7 +34,7 @@ function wibar.get(s)
 
     for k,_ in pairs(config.bar.widgets) do
         for _,v in pairs(config.bar.widgets[k]) do
-            widgets[k][#widgets[k]+1] = ({
+            table.insert(widgets[k], {
                 v,
                 left = config.bar.widget_padding,
                 right = config.bar.widget_padding,

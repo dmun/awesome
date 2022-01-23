@@ -8,7 +8,7 @@ local memory = wibox.widget {
 
 awesome.connect_signal("status::memory", function(usage)
     memory.font = beautiful.font
-    local markup = "<span foreground='#5B6268'> </span>" .. usage .. " MiB"
+    local markup = "<span foreground='" .. memory.icon_color .. "'> </span>" .. usage .. " MiB"
 
     memory.markup = markup
 end)

@@ -17,7 +17,7 @@ client.connect_signal("focus", function(c)
     else
         class_name = c.class:sub(1,1):upper() .. c.class:sub(2)
     end
-    M.markup = "<b>" .. class_name .. "</b>"
+    M.markup = "<span foreground='" .. M.text_color .. "'>" .. class_name .. "</span>"
 end)
 
 return M

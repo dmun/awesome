@@ -1,3 +1,15 @@
+local systray   = require("widgets.systray")
+local textclock = require("widgets.textclock")
+local battery   = require("widgets.battery")
+local client_name = require("widgets.client_name")
+client_name.text_color = "#5B6268"
+
+local cpu       = require "widgets.cpu"
+cpu.icon_color = '#c678dd'
+
+local memory    = require "widgets.memory"
+memory.icon_color = '#98be65'
+
 return {
     autostart = {
         "~/.fehbg",
@@ -9,21 +21,20 @@ return {
     bar = {
         position = "top",
         widget_padding = 18,
-        height = 28,
+        height = 29,
         widgets = {
             left = {
-                require("wibox").widget {
-                    markup = "",
-                    widget = require("wibox").widget.textbox,
-                },
-                require("widgets.client_name"),
             },
-            middle = {},
+            middle = {
+                client_name
+            },
             right = {
-                require("widgets.systray"),
+                systray,
+                memory,
+                cpu,
+                battery,
                 require("awful").widget.keyboardlayout(),
-                require("widgets.battery"),
-                require("widgets.textclock"),
+                textclock,
             }
         },
     },
