@@ -157,5 +157,5 @@ client.connect_signal("property::maximized", set_border)
 client.connect_signal("property::floating", set_border)
 
 for _,v in pairs(config.autostart) do
-    awful.spawn.with_shell(v)
+    awful.spawn.with_shell("pgrep -x '" .. v .. "' > /dev/null || " .. v .. " &")
 end

@@ -16,7 +16,8 @@ return {
         "xset r rate 225 33",
         "sxhkd",
         "nm-applet",
-        "killall redshift-gtk; redshift-gtk -l 52.3:4.8",
+        "blueman-applet",
+        "redshift-gtk",
     },
     bar = {
         position = "top",
