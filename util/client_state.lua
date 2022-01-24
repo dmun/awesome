@@ -1,20 +1,22 @@
+local awful = require "awful"
+local util  = require("util")
+
 local M = {}
 
 function M.change(state)
-    client.focus.fullscreen = false
-    client.focus.maximized = false
-    client.focus.ontop = false
-    client.focus.floating = false
+    local c = client.focus
+    c.ontop = false
+    c.floating = false
+    awful.layout.set(awful.layout.suit.tile.right)
     if state == "floating" or state == "stacking" then
-        client.focus.floating = true
-        client.focus.ontop = true
+        c.floating = true
+        c.ontop = true
     elseif state == "maximized" then
-        client.focus.maximized = true
-        client.focus.ontop = true
+       awful.layout.set(awful.layout.suit.max)
     elseif state == "fullscreen" then
-        client.focus.ontop = true
-        client.focus.fullscreen = true
+        awful.layout.set(awful.layout.suit.max.fullscreen)
     end
+    util.set_border(c)
 end
 
 return M
