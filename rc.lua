@@ -38,8 +38,8 @@ beautiful.init(theme_path)
 
 -- Layouts
 awful.layout.layouts = {
-    awful.layout.suit.tile.left,
     awful.layout.suit.tile.right,
+    awful.layout.suit.tile.left,
 }
 
 -- Menu
@@ -137,24 +137,14 @@ if config.sloppy_focus then
     end)
 end
 
-local function set_border(c)
-    local s = awful.screen.focused()
-    if c.maximized
-        or (#s.tiled_clients == 1 and not c.floating)
-        or (s.selected_tag and s.selected_tag.layout.name == 'max')
-    then
-        c.border_width = 0
-    else
-        c.border_width = beautiful.border_width
-    end
-end
+local util = require("util")
 
-client.connect_signal("focus", function(c) set_border(c) c.border_color = beautiful.border_focus c:raise() end)
-client.connect_signal("unfocus", function(c) set_border(c) c.border_color = beautiful.border_normal end)
+client.connect_signal("focus", function(c) util.update_border(c) c.border_color = beautiful.border_focus c:raise() end)
+client.connect_signal("unfocus", function(c) util.update_border(c) c.border_color = beautiful.border_normal end)
 
-client.connect_signal("request::border", set_border)
-client.connect_signal("property::maximized", set_border)
-client.connect_signal("property::floating", set_border)
+client.connect_signal("request::border", util.update_border)
+client.connect_signal("property::maximized", util.update_border)
+client.connect_signal("property::floating", util.update_border)
 
 for _,v in pairs(config.autostart) do
     awful.spawn.with_shell("pgrep -x '" .. v .. "' > /dev/null || " .. v .. " &")
