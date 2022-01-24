@@ -2,7 +2,6 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local xresources = require("beautiful.xresources")
-local beautiful = require("beautiful")
 local dpi = xresources.apply_dpi
 
 local taglist = {}
@@ -49,8 +48,9 @@ function taglist.get(s)
             bottom = 6,
             left = 5,
             right = 5,
-            widget = wibox.container.margin
-        }
+            widget = wibox.container.margin,
+        },
+        buttons = taglist_buttons
     }
 
     return widget
