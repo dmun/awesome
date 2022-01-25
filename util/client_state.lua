@@ -16,7 +16,7 @@ function M.change(state)
     elseif state == "fullscreen" then
         awful.layout.set(awful.layout.suit.max.fullscreen)
     end
-    util.set_border(c)
+    util.update_border(c)
 end
 
 return M
