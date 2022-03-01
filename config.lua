@@ -14,10 +14,12 @@ return {
     autostart = {
         "~/.fehbg",
         "xset r rate 225 33",
+        "xset m 2/1 0",
         "sxhkd",
         "nm-applet",
         "blueman-applet",
         "redshift-gtk",
+        "pasystray",
     },
     bar = {
         position = "top",
