@@ -70,6 +70,13 @@ screen.connect_signal("property::geometry", set_wallpaper)
 awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
     awful.tag({ "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" }, s, awful.layout.layouts[1])
+    awful.wibox({
+        screen = s,
+        position = config.bar.position,
+        y = 1,
+        height = 3,
+        bg = beautiful.bg_normal,
+    })
     wibar.get(s)
     awful.wibox({
         screen = s,

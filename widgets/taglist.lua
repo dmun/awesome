@@ -28,8 +28,8 @@ local taglist_buttons = gears.table.join(
 
 function taglist.get(s)
     local widget = awful.widget.taglist {
-        screen  = s,
-        filter  = function (t) return t.selected or #t:clients() > 0 end,
+        screen = s,
+        filter = function (t) return (t.selected or #t:clients() > 0) and t.screen == s end,
         widget_template = {
             {
                 {

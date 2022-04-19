@@ -7,17 +7,11 @@ local battery = wibox.widget {
 }
 
 local status_icon = {
-    {99, " ", " "},
-    {90, " ", " "},
-    {80, " ", " "},
-    {70, " ", " "},
-    {60, " ", " "},
-    {50, " ", " "},
-    {40, " ", " "},
-    {30, " ", " "},
-    {20, " ", " "},
-    {10, " ", " "},
-    { 0, " ", " "},
+    {95, "  "},
+    {75, "  "},
+    {50, "  "},
+    {25, "  "},
+    {10, "  "},
 }
 
 awesome.connect_signal("status::battery", function(capacity, charging)
@@ -28,7 +22,7 @@ awesome.connect_signal("status::battery", function(capacity, charging)
         if capacity >= value[1] then
             if (charging == true) then
                 -- markup = "<span foreground='#5B6268'>" .. value[3] .. "</span>" .. markup
-                markup = value[3] .. markup
+                markup = "<span foreground='#DA8548'>" .. value[3] or value[2] .. "</span>" .. markup
             else
 				if capacity <= 20 then
 					markup = "<span foreground='#E3605F'>" .. value[2] .. "</span>" .. markup

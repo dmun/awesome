@@ -19,12 +19,11 @@ return {
         "nm-applet",
         "blueman-applet",
         "redshift-gtk",
-        "pasystray",
     },
     bar = {
         position = "top",
-        widget_padding = 18,
-        height = 29,
+        widget_padding = 16,
+        height = 28,
         widgets = {
             left = {
             },
@@ -36,10 +35,10 @@ return {
                 memory,
                 cpu,
                 battery,
-                require("awful").widget.keyboardlayout(),
+                -- require("awful").widget.keyboardlayout(),
                 textclock,
             }
         },
     },
-    sloppy_focus = true,
+    sloppy_focus = false,
 }
