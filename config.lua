@@ -13,7 +13,9 @@ memory.icon_color = '#98be65'
 return {
     autostart = {
         "~/.fehbg",
+        "xrdb ~/.Xresources",
         "xset r rate 225 33",
+        "xmodmap ~/.Xmodmap",
         "xset m 2/1 0",
         "sxhkd",
         "nm-applet",

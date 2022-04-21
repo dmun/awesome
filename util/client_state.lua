@@ -5,6 +5,8 @@ local M = {}
 
 function M.change(state)
     local c = client.focus
+    c.fullscreen = false
+    c.maximized = false
     c.ontop = false
     c.floating = false
     awful.layout.set(awful.layout.suit.tile.right)

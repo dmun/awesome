@@ -10,6 +10,10 @@ local keys      = require("keys")
 local config    = require("config")
 require("awful.autofocus")
 
+function Log(message)
+    naughty.notify({ title = debug.getinfo(1, 'S').source, text = message })
+end
+
 do
     -- Error handling
     -- Check if awesome encountered an error during startup and fell back to
