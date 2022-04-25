@@ -2,7 +2,7 @@ local awful = require("awful")
 local gears = require("gears")
 
 local emittable = true
-local debounce = 0.15
+local debounce = 0.1
 
 awful.spawn.with_line_callback("pactl subscribe", {
     stdout = function()
