@@ -1,7 +1,7 @@
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
-require("status.volume")
+local volume = require("status.volume")
 
 local M = wibox.widget {
     widget = wibox.widget.textbox
@@ -12,6 +12,9 @@ local status_icon = {
     {20, "奔 "},
     {0, "奄 "},
 }
+
+-- initial volume update
+volume.emit()
 
 awesome.connect_signal("status::volume", function(volume, muted)
     M.font = beautiful.font
