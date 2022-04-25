@@ -43,6 +43,9 @@ theme.notification_margin = 100
 theme.notification_spacing = dpi(15)
 theme.notification_border_width = 2
 
+theme.snap_bg = "#51afef"
+theme.snap_shape = require("util.shape").rounded_rect(0)
+
 theme.menu_height = dpi(15)
 theme.menu_width  = dpi(100)
 
