@@ -1,18 +1,18 @@
+local naughty = require("naughty")
+function Log(message)
+    naughty.notify({ title = debug.getinfo(1, 'S').source, text = message })
+end
+
 local gears     = require("gears")
 local awful     = require("awful")
 local wibox     = require("wibox")
 local beautiful = require("beautiful")
-local naughty   = require("naughty")
 local rules     = require("rules")
 local wibar     = require("widgets.wibar")
 local json      = require("util.json")
 local keys      = require("keys")
 local config    = require("config")
 require("awful.autofocus")
-
-function Log(message)
-    naughty.notify({ title = debug.getinfo(1, 'S').source, text = message })
-end
 
 do
     -- Error handling
