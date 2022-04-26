@@ -9,7 +9,7 @@ local M = {}
 awful.spawn.easy_async_with_shell("killall pactl", function()
     function M.emit()
         awful.spawn.easy_async_with_shell("pactl get-sink-volume 0", function(stdout)
-            local volume = tonumber(stdout:match("(%d*)%%"))
+            local volume = tonumber(stdout:match("(%d*)%%")) or 0
             awful.spawn.easy_async_with_shell("pactl get-sink-mute 0 | cut -d ' ' -f 2", function(stdout)
                 local muted = false
                 if stdout:find("yes") then
@@ -20,15 +20,17 @@ awful.spawn.easy_async_with_shell("killall pactl", function()
         end)
     end
 
-    awful.spawn.with_line_callback("pactl subscribe", {
+    awful.spawn.with_line_callback("sh -c 'pactl subscribe | grep --line-buffered sink'", {
         stdout = function()
-            if emittable then
-                emittable = false
-                M.emit()
-            end
-            gears.timer.start_new(debounce, function()
-                emittable = true
-            end)
+            M.emit()
+            -- Log(stdout:match("sink"))
+            -- if emittable then
+            --     emittable = false
+            --     M.emit()
+            -- end
+            -- gears.timer.start_new(debounce, function()
+            --     emittable = true
+            -- end)
         end
     })
 
