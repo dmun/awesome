@@ -1,6 +1,6 @@
 local naughty = require("naughty")
 function Log(message)
-    naughty.notify({ title = debug.getinfo(1, 'S').source, text = message })
+    naughty.notify({ title = debug.getinfo(1, 'S').source, text = tostring(message) })
 end
 
 local gears     = require("gears")

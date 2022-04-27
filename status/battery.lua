@@ -1,6 +1,6 @@
 local awful = require("awful")
 
-local interval = 10
+local interval = 2
 
 awful.widget.watch("acpi", interval, function(_, stdout)
     local capacity = 0
