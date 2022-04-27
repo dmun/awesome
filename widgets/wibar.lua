@@ -1,6 +1,8 @@
 local awful      = require("awful")
 local wibox      = require("wibox")
-local xresources = require("beautiful.xresources")
+local beautiful  = require("beautiful")
+local shape      = require("util.shape")
+local xresources = beautiful.xresources
 local dpi        = xresources.apply_dpi
 local config     = require("config")
 
@@ -14,18 +16,19 @@ function wibar.get(s)
     })
 
     local taglist = require("widgets.taglist").get(s)
+    taglist.highlight = false
     table.insert(config.bar.widgets.left, taglist)
 
     local widgets = {
         left = {
-            {
-                {
-                    text = " ",
-                    widget = wibox.widget.textbox
-                },
-                left = dpi(18),
-                widget = wibox.container.margin
-            },
+            -- {
+            --     {
+            --         text = " ",
+            --         widget = wibox.widget.textbox
+            --     },
+            --     left = dpi(18),
+            --     widget = wibox.container.margin
+            -- },
             layout = wibox.layout.fixed.horizontal,
         },
         middle = {
@@ -38,12 +41,22 @@ function wibar.get(s)
 
     for k,_ in pairs(config.bar.widgets) do
         for _,v in pairs(config.bar.widgets[k]) do
-            table.insert(widgets[k], {
-                v,
-                left = config.bar.widget_padding,
-                right = config.bar.widget_padding,
-                widget = wibox.container.margin,
-            })
+            local widget = wibox.widget {
+                {
+                    v,
+                    top = 2,
+                    left = config.bar.widget_padding,
+                    right = config.bar.widget_padding,
+                    widget = wibox.container.margin,
+                },
+                shape = shape.rounded_rect(6),
+                widget = wibox.container.background,
+            }
+            if v.highlight ~= false then
+                widget:connect_signal("mouse::enter", function(c) c:set_bg("#282C34") end)
+                widget:connect_signal("mouse::leave", function(c) c:set_bg(beautiful.bg_normal) end)
+            end
+            table.insert(widgets[k], widget)
         end
     end
 

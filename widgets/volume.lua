@@ -19,7 +19,7 @@ awesome.connect_signal("status::volume", function(volume, muted)
 
     for _, value in pairs(status_icon) do
         if muted then
-            markup = "<span foreground='#E3605F'>" .. "婢 " .. "</span>"
+            markup = "<span foreground='#E3605F'>" .. " 婢 " .. "</span>"
             break
         end
         if volume >= value[1] then

@@ -6,7 +6,8 @@ local systray = {
     wibox.widget.systray(),
     top = dpi(7),
     bottom = dpi(6),
-    widget = wibox.container.margin
+    widget = wibox.container.margin,
+    highlight = false,
 }
 
 return systray

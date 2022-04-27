@@ -46,8 +46,7 @@ function taglist.get(s)
             },
             top = 6,
             bottom = 6,
-            left = 5,
-            right = 5,
+            right = 10,
             widget = wibox.container.margin,
         },
         buttons = taglist_buttons

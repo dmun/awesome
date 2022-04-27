@@ -2,6 +2,7 @@ local systray   = require("widgets.systray")
 local textclock = require("widgets.textclock")
 local battery   = require("widgets.battery")
 local volume    = require("widgets.volume")
+local buttons   = require("widgets.buttons")
 local client_name = require("widgets.client_name")
 client_name.text_color = "#5B6268"
 
@@ -29,6 +30,7 @@ return {
         height = 28,
         widgets = {
             left = {
+                buttons,
             },
             middle = {
                 client_name
