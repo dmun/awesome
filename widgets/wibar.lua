@@ -49,12 +49,12 @@ function wibar.get(s)
                     right = config.bar.widget_padding,
                     widget = wibox.container.margin,
                 },
-                shape = shape.rounded_rect(6),
+                shape = shape.rounded_rect(dpi(4)),
                 widget = wibox.container.background,
             }
             if v.highlight ~= false then
-                widget:connect_signal("mouse::enter", function(c) c:set_bg("#282C34") end)
-                widget:connect_signal("mouse::leave", function(c) c:set_bg(beautiful.bg_normal) end)
+                widget:connect_signal("mouse::enter", function(c) c:set_fg("#FFFFFF") c:set_bg("#2c3038") end)
+                widget:connect_signal("mouse::leave", function(c) c:set_fg(beautiful.fg_normal) c:set_bg(beautiful.bg_normal) end)
             end
             table.insert(widgets[k], widget)
         end
