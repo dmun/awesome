@@ -12,21 +12,21 @@ local button_spacing = 8
 local buttons = {
     {
         "#FF6C6B",
-        "#fc9292",
+        "#fcbaba",
         function ()
             client.focus:kill()
         end
     },
     {
         "#ECBE7B",
-        "#edcb97",
+        "#fcdeb0",
         function ()
             util.change("default")
         end
     },
     {
         "#98BE65",
-        "#b1d187",
+        "#cce5ac",
         function ()
             util.change("maximized")
         end

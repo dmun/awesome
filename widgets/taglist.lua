@@ -44,9 +44,10 @@ function taglist.get(s)
                 id = 'background_role',
                 widget = wibox.container.background
             },
-            top = 6,
-            bottom = 6,
-            right = 10,
+            top = dpi(4),
+            bottom = dpi(4),
+            left = dpi(3),
+            right = dpi(3),
             widget = wibox.container.margin,
         },
         buttons = taglist_buttons

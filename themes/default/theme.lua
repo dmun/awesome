@@ -23,7 +23,7 @@ theme.systray_icon_spacing = 15
 
 theme.fg_normal     = "#dddddd"
 theme.taglist_fg_empty = "#5B6268"
-theme.taglist_bg_occupied = "#2b313b"
+theme.taglist_bg_occupied = "#3f444a"
 theme.taglist_shape = require("util.shape").rounded_rect(dpi(2))
 theme.fg_focus      = "#21242b"
 theme.fg_urgent     = "#ffffff"
