@@ -40,10 +40,10 @@ function wibar.get(s)
     }
 
     for k,_ in pairs(config.bar.widgets) do
-        for _,v in pairs(config.bar.widgets[k]) do
-            local widget = wibox.widget {
+        for _,widget in pairs(config.bar.widgets[k]) do
+            local spaced = wibox.widget {
                 {
-                    v,
+                    widget,
                     top = 2,
                     left = config.bar.widget_padding,
                     right = config.bar.widget_padding,
@@ -52,11 +52,36 @@ function wibar.get(s)
                 shape = shape.rounded_rect(dpi(4)),
                 widget = wibox.container.background,
             }
-            if v.highlight ~= false then
-                widget:connect_signal("mouse::enter", function(c) c:set_fg("#FFFFFF") c:set_bg("#2c3038") end)
-                widget:connect_signal("mouse::leave", function(c) c:set_fg(beautiful.fg_normal) c:set_bg(beautiful.bg_normal) end)
+
+            if widget.highlight ~= false then
+                spaced:connect_signal("mouse::enter", function(c) c:set_fg("#FFFFFF") c:set_bg("#2c3038") end)
+                spaced:connect_signal("mouse::leave", function(c) c:set_fg(beautiful.fg_normal) c:set_bg(beautiful.bg_normal) end)
             end
-            table.insert(widgets[k], widget)
+
+            local buttons = {
+                {1, widget.left_click},
+                {2, widget.middle_click},
+                {3, widget.right_click},
+                {4, widget.scroll_up},
+                {5, widget.scroll_down},
+            }
+
+            for _, button in pairs(buttons) do
+                if button[2] then
+                    spaced:connect_signal("button::press", function(_, _, _, pressed)
+                        if pressed == button[1] then
+                            if type(button[2]) == "string" then
+                                awful.spawn(button[2])
+                            elseif type(button[2]) == "function" then
+                                button[2](widget)
+                            end
+                        end
+                    end)
+                end
+            end
+
+
+            table.insert(widgets[k], spaced)
         end
     end
 

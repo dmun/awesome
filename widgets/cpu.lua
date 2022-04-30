@@ -3,7 +3,8 @@ local beautiful = require("beautiful")
 require("status.cpu")
 
 local cpu = wibox.widget {
-    widget = wibox.widget.textbox
+    widget = wibox.widget.textbox,
+    left_click = "kitty -e bpytop",
 }
 
 awesome.connect_signal("status::cpu", function(usage)

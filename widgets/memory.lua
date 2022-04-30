@@ -1,9 +1,11 @@
+local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 require("status.memory")
 
 local memory = wibox.widget {
-    widget = wibox.widget.textbox
+    widget = wibox.widget.textbox,
+    left_click = "kitty -e bpytop",
 }
 
 awesome.connect_signal("status::memory", function(usage)

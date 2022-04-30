@@ -4,7 +4,10 @@ local beautiful = require("beautiful")
 require("status.volume")
 
 local M = wibox.widget {
-    widget = wibox.widget.textbox
+    widget = wibox.widget.textbox,
+    left_click = "pactl set-sink-mute 0 toggle",
+    scroll_up = "pactl set-sink-volume 0 +5%",
+    scroll_down = "pactl set-sink-volume 0 -5%",
 }
 
 local status_icon = {
@@ -29,16 +32,6 @@ awesome.connect_signal("status::volume", function(volume, muted)
     end
 
     M.markup = markup
-end)
-
-M:connect_signal("button::press", function(_, _, _, button)
-    if button == 1 or button == 2 or button == 3 then
-        awful.spawn.with_shell("pactl set-sink-mute 0 toggle")
-    elseif button == 4 then
-        awful.spawn.with_shell("pactl set-sink-volume 0 +5%")
-    elseif button == 5 then
-        awful.spawn.with_shell("pactl set-sink-volume 0 -5%")
-    end
 end)
 
 return M
