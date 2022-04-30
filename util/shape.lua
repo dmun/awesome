@@ -8,4 +8,10 @@ function M.rounded_rect(radius)
     end
 end
 
+function M.circle(radius)
+    return function(cr, width, height)
+        gears.shape.circle(cr, width, height, radius)
+    end
+end
+
 return M
