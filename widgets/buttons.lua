@@ -11,24 +11,35 @@ local button_spacing = 8
 
 local buttons = {
     {
-        "#FF6C6B",
-        "#fcbaba",
-        function ()
+        fg       = "#FF6C6B",
+        fg_hover = "#fcbaba",
+        left = function ()
             client.focus:kill()
         end
     },
     {
-        "#ECBE7B",
-        "#fcdeb0",
-        function ()
+        fg       = "#ECBE7B",
+        fg_hover = "#fcdeb0",
+        left = function ()
             util.change("default")
         end
     },
     {
-        "#98BE65",
-        "#cce5ac",
-        function ()
-            util.change("maximized")
+        fg       = "#98BE65",
+        fg_hover = "#cce5ac",
+        right = function ()
+            if awful.screen.focused().selected_tag.layout.name == "fullscreen" or client.focus.fullscreen then
+                util.change("default")
+            else
+                util.change("fullscreen")
+            end
+        end,
+        left = function ()
+            if awful.screen.focused().selected_tag.layout.name == "max" or client.focus.maximized then
+                util.change("default")
+            else
+                util.change("maximized")
+            end
         end
     },
 }
@@ -49,23 +60,27 @@ for i, button in pairs(buttons) do
     }
     circle:connect_signal("mouse::enter", function(c)
         if client.focus ~= nil then
-            c:set_bg(button[2])
+            c:set_bg(button.fg_hover)
         end
     end)
     circle:connect_signal("mouse::leave", function(c)
         if client.focus ~= nil then
-            c:set_bg(button[1])
+            c:set_bg(button.fg)
         end
     end)
     client.connect_signal("focus", function()
-        circle:set_bg(button[1])
+        circle:set_bg(button.fg)
     end)
     client.connect_signal("unfocus", function()
         circle:set_bg("#5B6268")
     end)
-    circle:connect_signal("button::press", function ()
+    circle:connect_signal("button::press", function(_, _, _, pressed)
         if client.focus ~= nil then
-            button[3]()
+            if pressed == 1 and button.left then
+                button.left()
+            elseif pressed == 3 and button.right then
+                button.right()
+            end
         end
     end
     )
