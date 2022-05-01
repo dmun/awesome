@@ -43,7 +43,7 @@ for i, button in pairs(buttons) do
             forced_height = dpi(10),
             widget = awful.widget.button,
         },
-        bg = button[1],
+        bg = "#5B6268",
         shape = shape.circle(dpi(5)),
         widget = wibox.container.background,
     }
