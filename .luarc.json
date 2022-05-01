@@ -5,6 +5,7 @@
         "root",
         "screen",
         "hotkeys_popup",
-        "client"
+        "client",
+        "mouse"
     ]
 }

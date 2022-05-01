@@ -81,13 +81,30 @@ awful.screen.connect_for_each_screen(function(s)
     --     height = 3,
     --     bg = beautiful.bg_normal,
     -- })
-    wibar.get(s)
-    awful.wibox({
+    local hover = awful.wibox({
+        screen = s,
+        position = config.bar.position,
+        height = 1,
+        bg = "#000000",
+        ontop = true,
+    })
+    local bar = wibar.get(s)
+    local underline = awful.wibox({
         screen = s,
         position = config.bar.position,
         height = 1,
         bg = "#000000",
     })
+    hover:connect_signal("mouse::enter", function ()
+        if awful.screen.focused().selected_tag.layout.name == "fullscreen" or client.focus.fullscreen then
+            bar.ontop = true
+            underline.ontop = true
+        end
+    end)
+    bar:connect_signal("mouse::leave", function ()
+        bar.ontop = false
+        underline.ontop = false
+    end)
 end)
 
 root.buttons(gears.table.join(
