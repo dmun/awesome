@@ -54,7 +54,7 @@ function wibar.get(s)
             }
 
             if widget.highlight ~= false then
-                spaced:connect_signal("mouse::enter", function(c) c:set_fg("#FFFFFF") c:set_bg("#2c3038") end)
+                spaced:connect_signal("mouse::enter", function(c) c:set_fg("#FFFFFF") c:set_bg(beautiful.bg_hover) end)
                 spaced:connect_signal("mouse::leave", function(c) c:set_fg(beautiful.fg_normal) c:set_bg(beautiful.bg_normal) end)
             end
 
