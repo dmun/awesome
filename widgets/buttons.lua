@@ -54,7 +54,7 @@ for i, button in pairs(buttons) do
             forced_height = dpi(10),
             widget = awful.widget.button,
         },
-        bg = "#5B6268",
+        bg = "#333333",
         shape = shape.circle(dpi(5)),
         widget = wibox.container.background,
     }
@@ -72,7 +72,7 @@ for i, button in pairs(buttons) do
         circle:set_bg(button.fg)
     end)
     client.connect_signal("unfocus", function()
-        circle:set_bg("#5B6268")
+        circle:set_bg("#333333")
     end)
     circle:connect_signal("button::press", function(_, _, _, pressed)
         if client.focus ~= nil then

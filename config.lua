@@ -1,16 +1,12 @@
-local systray   = require("widgets.systray")
-local textclock = require("widgets.textclock")
-local battery   = require("widgets.battery")
-local volume    = require("widgets.volume")
-local buttons   = require("widgets.buttons")
+local systray     = require("widgets.systray")
+local textclock   = require("widgets.textclock")
+local battery     = require("widgets.battery")
+local volume      = require("widgets.volume")
+local buttons     = require("widgets.buttons")
 local client_name = require("widgets.client_name")
+local cpu         = require "widgets.cpu"
+local memory      = require "widgets.memory"
 client_name.text_color = "#5B6268"
-
-local cpu       = require "widgets.cpu"
-cpu.icon_color = '#c678dd'
-
-local memory    = require "widgets.memory"
-memory.icon_color = '#98be65'
 
 return {
     autostart = {
@@ -31,10 +27,9 @@ return {
         widgets = {
             left = {
                 buttons,
+                client_name,
             },
-            middle = {
-                client_name
-            },
+            middle = {},
             right = {
                 systray,
                 memory,

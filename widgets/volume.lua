@@ -1,10 +1,15 @@
-local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 require("status.volume")
 
+local widget = require("widgets")
+local icon = widget:new_icon("墳 ")
+local text = widget:new_text("100%")
+
 local M = wibox.widget {
-    widget = wibox.widget.textbox,
+    icon,
+    text,
+    layout = wibox.layout.align.horizontal,
     left_click = "pactl set-sink-mute 0 toggle",
     scroll_up = "pactl set-sink-volume 0 +5%",
     scroll_down = "pactl set-sink-volume 0 -5%",
@@ -18,20 +23,19 @@ local status_icon = {
 
 awesome.connect_signal("status::volume", function(volume, muted)
     M.font = beautiful.font
-    local markup = volume .. "%"
-
-    for _, value in pairs(status_icon) do
-        if muted then
-            markup = "<span foreground='#E3605F'>" .. " 婢 " .. "</span>"
-            break
-        end
-        if volume >= value[1] then
-            markup = "<span foreground='#51AFEF'>" .. value[2] .. "</span>" .. markup
-            break
+    text:set_markup(volume .. "%")
+    if muted then
+        text:hide()
+        icon:set(" 婢 ", beautiful.red)
+    else
+        text:show()
+        for _, value in pairs(status_icon) do
+            if volume >= value[1] then
+                icon:set(value[2], beautiful.fg_normal)
+                break
+            end
         end
     end
-
-    M.markup = markup
 end)
 
 return M

@@ -10,21 +10,24 @@ local themes_path = "~/.config/awesome/themes/"
 
 local theme = {}
 
-theme.font          = "JetBrainsMono Nerd Font Medium 8"
+theme.red           = "#E3605F"
+
+theme.font          = "PingFangSC-Medium 9"
+theme.icon_font     = "JetBrainsMono Nerd Font 11"
 
 -- theme.bg_normal     = "#232831"
 -- theme.bg_focus      = "#2d333f"
-theme.bg_normal     = "#1d2026"
-theme.bg_hover      = "#2c3038"
+theme.bg_normal     = "#000"
+theme.bg_hover      = "#222222"
 theme.bg_focus      = "#dddddd"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
 theme.systray_icon_spacing = 15
 
-theme.fg_normal     = "#dddddd"
+theme.fg_normal     = "#ffffff"
 theme.taglist_fg_empty = "#5B6268"
-theme.taglist_bg_occupied = "#3f444a"
+theme.taglist_bg_occupied = "#222222"
 theme.taglist_shape = require("util.shape").rounded_rect(dpi(2))
 theme.fg_focus      = "#21242b"
 theme.fg_urgent     = "#ffffff"
@@ -32,9 +35,9 @@ theme.fg_minimize   = "#ffffff"
 
 theme.gap_single_client = false
 theme.useless_gap   = dpi(0)
-theme.useless_gap   = -1
-theme.border_width  = 1
-theme.inner_border_width  = 0
+theme.useless_gap   = -2
+theme.border_width  = 0
+theme.inner_border_width  = 1
 theme.border_normal = "#000000"
 theme.border_focus  = "#51afef"
 theme.border_marked = "#a9a1e1"

@@ -1,3 +1,6 @@
+local beautiful = require("beautiful")
+beautiful.init(require("themes.default.theme"))
+
 local naughty = require("naughty")
 function Log(message)
     naughty.notify({ title = debug.getinfo(1, 'S').source, text = tostring(message) })
@@ -6,7 +9,6 @@ end
 local gears     = require("gears")
 local awful     = require("awful")
 local wibox     = require("wibox")
-local beautiful = require("beautiful")
 local rules     = require("rules")
 local wibar     = require("widgets.wibar")
 local json      = require("util.json")
@@ -36,9 +38,6 @@ do
         end
     end)
 end
-
-local theme_path = string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), "default")
-beautiful.init(theme_path)
 
 -- Layouts
 awful.layout.layouts = {
@@ -73,7 +72,8 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
-    awful.tag({ "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" }, s, awful.layout.layouts[1])
+    -- awful.tag({ "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, s, awful.layout.layouts[1])
     -- awful.wibox({
     --     screen = s,
     --     position = config.bar.position,
@@ -81,30 +81,34 @@ awful.screen.connect_for_each_screen(function(s)
     --     height = 3,
     --     bg = beautiful.bg_normal,
     -- })
-    local hover = awful.wibox({
-        screen = s,
-        position = config.bar.position,
-        height = 1,
-        bg = "#000000",
-        ontop = true,
-    })
+    -- local hover = awful.wibox({
+    --     screen = s,
+    --     position = config.bar.position,
+    --     height = 1,
+    --     bg = "#000000",
+    --     ontop = true,
+    -- })
     local bar = wibar.get(s)
-    local underline = awful.wibox({
-        screen = s,
-        position = config.bar.position,
-        height = 1,
-        bg = "#000000",
-    })
-    hover:connect_signal("mouse::enter", function ()
-        if awful.screen.focused().selected_tag.layout.name == "fullscreen" or client.focus.fullscreen then
-            bar.ontop = true
-            underline.ontop = true
-        end
-    end)
-    bar:connect_signal("mouse::leave", function ()
-        bar.ontop = false
-        underline.ontop = false
-    end)
+    -- local underline = awful.wibox({
+    --     screen = s,
+    --     position = config.bar.position,
+    --     height = 1,
+    --     bg = "#000000",
+    -- })
+    -- hover:connect_signal("mouse::enter", function ()
+    --     -- if awful.screen.focused().selected_tag.layout.name == "fullscreen" or client.focus.fullscreen then
+    --         bar.ontop = true
+    --         -- underline.ontop = true
+    --     -- end
+    -- end)
+    -- bar:connect_signal("mouse::enter", function ()
+    --     bar.ontop = true
+    --     -- underline.ontop = true
+    -- end)
+    -- bar:connect_signal("mouse::leave", function ()
+    --     bar.ontop = false
+    --     -- underline.ontop = false
+    -- end)
 end)
 
 root.buttons(gears.table.join(
@@ -134,6 +138,9 @@ client.connect_signal("request::titlebars", function(c)
 
     if file ~= nil then
         client_color = json.decode(file:read("*all"))[c.class] or { focus = "#3c3c3c", normal = "#303030", focus_top = "#3c3c3c", normal_top = "#303030" }
+        gears.timer.start_new(1, function ()
+            require("util.client_colors").update()
+        end)
         file:close()
     end
 

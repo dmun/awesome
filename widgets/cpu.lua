@@ -1,17 +1,19 @@
 local wibox = require("wibox")
-local beautiful = require("beautiful")
 require("status.cpu")
 
+local widget = require("widgets")
+local icon = widget:new_icon(" ")
+local text = widget:new_text(" ")
+
 local cpu = wibox.widget {
-    widget = wibox.widget.textbox,
+    icon,
+    text,
+    widget = wibox.layout.align.horizontal,
     left_click = "kitty -e bpytop",
 }
 
 awesome.connect_signal("status::cpu", function(usage)
-    cpu.font = beautiful.font
-    local markup = "<span foreground='" .. cpu.icon_color .. "'> </span>" .. usage .. "%"
-
-    cpu.markup = markup
+    text:set_markup(" " .. usage .. "%")
 end)
 
 return cpu
