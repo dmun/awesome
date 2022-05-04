@@ -1,5 +1,4 @@
 local awful = require("awful")
-local wibox = require("wibox")
 local beautiful = require("beautiful")
 
 local M = {}
@@ -16,11 +15,10 @@ function M.update_border(c)
             c.border_width = 0
         end
     else
-        awful.screen.padding(s, { top = 4, right = 4, bottom = 4, left = 4 })
+        awful.screen.padding(s, { top = 2, right = 2, bottom = 2, left = 2 })
         awful.placement.honor_padding = false
         c.border_width = beautiful.border_width
     end
-        -- awful.screen.padding(s, 0)
 end
 
 function M.change(state)
