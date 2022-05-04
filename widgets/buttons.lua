@@ -20,6 +20,9 @@ local buttons = {
     {
         fg       = "#ECBE7B",
         fg_hover = "#fcdeb0",
+        right = function ()
+            util.change("floating")
+        end,
         left = function ()
             util.change("default")
         end
