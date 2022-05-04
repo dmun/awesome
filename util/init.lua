@@ -14,7 +14,17 @@ function M.update_border(c)
         else
             c.border_width = 0
         end
+        if s.selected_tag.layout.name == 'fullscreen' then
+            awful.titlebar.hide(c, "top")
+            awful.titlebar.hide(c, "right")
+            awful.titlebar.hide(c, "bottom")
+            awful.titlebar.hide(c, "left")
+        end
     else
+        awful.titlebar.show(c, "top")
+        awful.titlebar.show(c, "right")
+        awful.titlebar.show(c, "bottom")
+        awful.titlebar.show(c, "left")
         awful.screen.padding(s, { top = 2, right = 2, bottom = 2, left = 2 })
         awful.placement.honor_padding = false
         c.border_width = beautiful.border_width
