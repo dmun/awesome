@@ -22,7 +22,7 @@ return {
     },
     bar = {
         position = "top",
-        widget_padding = 16,
+        widget_padding = 12,
         height = 30,
         widgets = {
             left = {

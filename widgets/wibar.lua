@@ -37,8 +37,8 @@ function wibar.get(s)
                 {
                     widget,
                     top = 2,
-                    left = config.bar.widget_padding,
-                    right = config.bar.widget_padding,
+                    left = dpi(config.bar.widget_padding),
+                    right = dpi(config.bar.widget_padding),
                     widget = wibox.container.margin,
                 },
                 shape = shape.rounded_rect(dpi(4)),

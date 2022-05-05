@@ -11,14 +11,15 @@ function M.update_border(c)
         awful.screen.padding(s, 0)
         if c.floating then
             c.border_width = beautiful.border_width
-        else
-            c.border_width = 0
+        -- else
+        --     c.border_width = 0
         end
         if s.selected_tag.layout.name == 'fullscreen' then
             awful.titlebar.hide(c, "top")
             awful.titlebar.hide(c, "right")
             awful.titlebar.hide(c, "bottom")
             awful.titlebar.hide(c, "left")
+            c.border_width = 0
         end
     else
         awful.titlebar.show(c, "top")
@@ -49,6 +50,7 @@ function M.change(state)
     for _,tc in pairs(c.screen.tiled_clients) do
         M.update_border(tc)
     end
+    M.update_border(c)
 end
 
 return M
