@@ -71,44 +71,33 @@ end
 screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
-    set_wallpaper(s)
-    -- awful.tag({ "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" }, s, awful.layout.layouts[1])
     awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, s, awful.layout.layouts[1])
-    -- awful.wibox({
-    --     screen = s,
-    --     position = config.bar.position,
-    --     y = 1,
-    --     height = 3,
-    --     bg = beautiful.bg_normal,
-    -- })
-    -- local hover = awful.wibox({
-    --     screen = s,
-    --     position = config.bar.position,
-    --     height = 1,
-    --     bg = "#000000",
-    --     ontop = true,
-    -- })
     local bar = wibar.get(s)
-    -- local underline = awful.wibox({
-    --     screen = s,
-    --     position = config.bar.position,
-    --     height = 1,
-    --     bg = "#000000",
-    -- })
-    -- hover:connect_signal("mouse::enter", function ()
-    --     -- if awful.screen.focused().selected_tag.layout.name == "fullscreen" or client.focus.fullscreen then
-    --         bar.ontop = true
-    --         -- underline.ontop = true
-    --     -- end
-    -- end)
-    -- bar:connect_signal("mouse::enter", function ()
-    --     bar.ontop = true
-    --     -- underline.ontop = true
-    -- end)
-    -- bar:connect_signal("mouse::leave", function ()
-    --     bar.ontop = false
-    --     -- underline.ontop = false
-    -- end)
+    local hover = awful.wibox({
+        screen = s,
+        type = "popup",
+        height = 1,
+        bg = "#000000",
+        opacity = 0,
+        ontop = true,
+    })
+    hover.input_passthrough = true
+    hover.y = 0
+    hover:connect_signal("mouse::enter", function ()
+        gears.timer.start_new(0.5, function ()
+            if mouse.coords().y == 0 then
+                bar.ontop = true
+            end
+        end)
+    end)
+    bar:connect_signal("mouse::enter", function ()
+        bar.ontop = true
+        hover.input_passthrough = true
+    end)
+    bar:connect_signal("mouse::leave", function ()
+        bar.ontop = false
+        hover.input_passthrough = false
+    end)
 end)
 
 root.buttons(gears.table.join(
