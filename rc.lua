@@ -73,16 +73,17 @@ screen.connect_signal("property::geometry", set_wallpaper)
 awful.screen.connect_for_each_screen(function(s)
     awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, s, awful.layout.layouts[1])
     local bar = wibar.get(s)
-    local hover = awful.wibox({
+    local hover = wibox({
         screen = s,
-        type = "popup",
-        height = 1,
+        height = 2,
+        width = s.workarea.width,
         bg = "#000000",
-        opacity = 0,
+        opacity = 1,
         ontop = true,
+        visible = true,
+        y = 0,
+        x = 0,
     })
-    hover.input_passthrough = true
-    hover.y = 0
     hover:connect_signal("mouse::enter", function ()
         gears.timer.start_new(0.5, function ()
             if mouse.coords().y == 0 then
