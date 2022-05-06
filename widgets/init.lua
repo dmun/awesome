@@ -1,5 +1,6 @@
 local wibox     = require("wibox")
 local beautiful = require("beautiful")
+local dpi       = require("beautiful.xresources").apply_dpi
 
 local M = {}
 
@@ -14,8 +15,9 @@ function M:new_icon(icon, fg)
         },
         bottom = 1,
         widget = wibox.container.margin,
-        set = function(self, icon, fg)
+        set = function(self, icon, fg, right)
             self.widget.markup = string.format("<span foreground='%s'>%s</span>", fg or self.widget.fg, icon or self.widget.icon)
+            self.right = dpi(right or 0)
         end,
     }
 end

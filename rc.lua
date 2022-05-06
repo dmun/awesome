@@ -78,7 +78,7 @@ awful.screen.connect_for_each_screen(function(s)
         height = 2,
         width = s.workarea.width,
         bg = "#000000",
-        opacity = 1,
+        opacity = 0,
         ontop = true,
         visible = true,
         y = 0,

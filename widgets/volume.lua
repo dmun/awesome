@@ -26,7 +26,7 @@ awesome.connect_signal("status::volume", function(volume, muted)
     text:set_markup(volume .. "%")
     if muted then
         text:hide()
-        icon:set("婢", beautiful.red)
+        icon:set("婢 ", beautiful.red, -8)
     else
         text:show()
         for _, value in pairs(status_icon) do
