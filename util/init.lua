@@ -28,6 +28,10 @@ function M.update_border(c)
             awful.titlebar.hide(c, "left")
             c.border_width = 0
         else
+            awful.titlebar.show(c, "top")
+            awful.titlebar.show(c, "right")
+            awful.titlebar.show(c, "bottom")
+            awful.titlebar.show(c, "left")
             awful.screen.padding(s, 0)
             awful.screen.padding(s, { top = 0, right = -2, bottom = -2, left = -2 })
         end
