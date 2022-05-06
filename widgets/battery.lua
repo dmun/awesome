@@ -39,6 +39,7 @@ awesome.connect_signal("status::battery", function(capacity, charging)
         for _, value in pairs(status_icon) do
             if capacity >= value[1] then
                 icon:set(value[2], beautiful.fg_normal)
+                break
             end
         end
     end
