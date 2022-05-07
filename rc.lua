@@ -109,6 +109,16 @@ root.buttons(gears.table.join(
 
 root.keys(keys.globalkeys)
 awful.rules.rules = rules
+inner_shades = wibox()
+inner_shades:setup {
+    {
+        markup = "XD",
+        widget = wibox.widget.textbox,
+    },
+    x = 0,
+    y = 0,
+    layout = wibox.layout.align.horizontal,
+}
 
 -- Signals
 -- Signal function to execute when a new client appears.
@@ -119,6 +129,82 @@ client.connect_signal("manage", function (c)
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
     end
+    inner_shades[c.window] = {}
+    inner_shades[c.window].top = wibox({
+        height = 1,
+        ontop = true,
+        visible = true,
+    })
+    inner_shades[c.window].right = wibox({
+        width = 1,
+        ontop = true,
+        visible = true,
+    })
+    inner_shades[c.window].bottom = wibox({
+        height = 1,
+        ontop = true,
+        visible = true,
+    })
+    inner_shades[c.window].left = wibox({
+        width = 1,
+        ontop = true,
+        visible = true,
+    })
+    c.update_inner_shade = function(c)
+        if c then
+            inner_shades[c.window].top.bg = c == client.focus and "#ffffff77" or "#ffffff44"
+            inner_shades[c.window].top.x = c:geometry().x + 1
+            inner_shades[c.window].top.y = c:geometry().y + 1
+            inner_shades[c.window].top.width = c:geometry().width
+
+            inner_shades[c.window].right.bg = c == client.focus and "#ffffff44" or "#ffffff33"
+            inner_shades[c.window].right.x = c:geometry().x + c:geometry().width
+            inner_shades[c.window].right.y = c:geometry().y + 1
+            inner_shades[c.window].right.height = c:geometry().height
+
+            inner_shades[c.window].bottom.bg = c == client.focus and "#ffffff44" or "#ffffff33"
+            inner_shades[c.window].bottom.x = c:geometry().x + 1
+            inner_shades[c.window].bottom.y = c:geometry().y + c:geometry().height
+            inner_shades[c.window].bottom.width = c:geometry().width
+
+            inner_shades[c.window].left.bg = c == client.focus and "#ffffff44" or "#ffffff33"
+            inner_shades[c.window].left.x = c:geometry().x + 1
+            inner_shades[c.window].left.y = c:geometry().y + 1
+            inner_shades[c.window].left.height = c:geometry().height
+        end
+    end
+    c.update_visible = function (c)
+        if c then
+            if c.screen.selected_tag then
+                for _, value in pairs(c.first_tag:clients()) do
+                    if inner_shades[value.window] then
+                        -- value.visible = false
+                        -- for _, v in pairs(inner_shades[value.window]) do
+                            inner_shades[value.window].top.visible = true
+                            inner_shades[value.window].right.visible = true
+                            inner_shades[value.window].bottom.visible = true
+                            inner_shades[value.window].left.visible = true
+                        -- end
+                    end
+                end
+            else
+                for _, value in pairs(c.first_tag:clients()) do
+                    inner_shades[value.window].visible = false
+                    inner_shades[value.window].top.visible = false
+                    inner_shades[value.window].right.visible = false
+                    inner_shades[value.window].bottom.visible = false
+                    inner_shades[value.window].left.visible = false
+                end
+            end
+        end
+    end
+    c.update_inner_shade()
+    -- inner_shades:remove_widget(c.window, true)
+    local h = inner_shades:get_children_by_id(c.window)
+    for key, value in pairs(inner_shades) do
+    end
+    -- table.remove(inner_shades, c.window)
+    -- c:remove_widget(c.inner_shade, true)
 end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
@@ -164,12 +250,39 @@ end
 
 local util = require("util")
 
-client.connect_signal("focus", function(c) util.update_border(c) c.border_color = beautiful.border_focus c:raise() end)
-client.connect_signal("unfocus", function(c) util.update_border(c) c.border_color = beautiful.border_normal end)
+client.connect_signal("focus", function(c)
+    util.update_border(c)
+    c.border_color = beautiful.border_focus
+    c:raise()
+    if c.update_inner_shade then
+        c:update_inner_shade()
+        c:update_visible()
+    end
+end)
+client.connect_signal("unfocus", function(c)
+    util.update_border(c)
+    c.border_color = beautiful.border_normal
+    if c.update_inner_shade then
+        c:update_inner_shade()
+        c:update_visible()
+    end
+end)
 
 client.connect_signal("request::border", util.update_border)
 client.connect_signal("property::maximized", util.update_border)
 client.connect_signal("property::floating", util.update_border)
+client.connect_signal("property::size", function (c)
+    -- Log(c.class)
+    if c.update_inner_shade then
+        c:update_inner_shade()
+    end
+end)
+client.connect_signal("property::position", function (c)
+    -- Log(c.class)
+    if c.update_inner_shade then
+        c:update_inner_shade()
+    end
+end)
 
 for _,v in pairs(config.autostart) do
     awful.spawn.with_shell("pgrep -x '" .. v .. "' > /dev/null || " .. v .. " &")
