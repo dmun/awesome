@@ -15,6 +15,7 @@ function M.update_border(c)
             awful.titlebar.show(c, "right")
             awful.titlebar.show(c, "bottom")
             awful.titlebar.show(c, "left")
+            awful.screen.padding(s, { top = 0, right = -2, bottom = -2, left = -2 })
         elseif s.selected_tag.layout.name == "max" then
             awful.screen.padding(s, { top = 0, right = -2, bottom = -2, left = -2 })
             awful.titlebar.show(c, "top")
