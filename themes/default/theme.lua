@@ -12,7 +12,7 @@ local theme = {}
 
 theme.red           = "#E3605F"
 
-theme.font          = "PingFangSC-Medium 9"
+theme.font          = "PingFangSC-Medium 8"
 theme.icon_font     = "JetBrainsMono Nerd Font 11"
 
 -- theme.bg_normal     = "#232831"
@@ -25,7 +25,7 @@ theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
 theme.systray_icon_spacing = 15
 
-theme.taglist_bg_empty = "#222222"
+theme.taglist_bg_empty = "#333333"
 theme.taglist_bg_occupied = "#5B6268"
 
 theme.fg_normal     = "#ffffff"
