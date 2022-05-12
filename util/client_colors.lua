@@ -4,6 +4,7 @@ local beautiful = require("beautiful")
 
 local colors = require("util.colors")
 local json = require("util.json")
+local util = require("util")
 
 local gsurface = require("gears.surface")
 local floor = math.floor
@@ -99,6 +100,7 @@ function M.update()
             layout = wibox.layout.align.horizontal
         }
     end
+    util.update_border(c)
 end
 
 return M

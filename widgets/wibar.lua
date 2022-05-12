@@ -41,7 +41,7 @@ function wibar.get(s)
                     right = dpi(config.bar.widget_padding),
                     widget = wibox.container.margin,
                 },
-                shape = shape.rounded_rect(dpi(4)),
+                shape = shape.rounded_rect(dpi(6)),
                 widget = wibox.container.background,
             }
 
@@ -91,6 +91,7 @@ function wibar.get(s)
         },
         {
             widgets.right,
+            right = dpi(8),
             widget = wibox.container.margin
         }
     }

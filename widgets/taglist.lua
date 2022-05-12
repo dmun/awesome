@@ -1,12 +1,14 @@
 local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
+local shape = require("util.shape")
+local beautiful = require("beautiful")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
 local taglist = {}
 
-local taglist_padding = 8
+local taglist_padding = 12
 
 local taglist_buttons = gears.table.join(
     awful.button({ }, 1, function(t) t:view_only() end),
@@ -29,26 +31,58 @@ local taglist_buttons = gears.table.join(
 function taglist.get(s)
     local widget = awful.widget.taglist {
         screen = s,
-        filter = function (t) return (t.selected or #t:clients() > 0) and t.screen == s end,
+        filter = awful.widget.taglist.filter.all,
         widget_template = {
+            top = dpi(2),
+            bottom = dpi(2),
+            left = dpi(0),
+            right = dpi(0),
+            forced_width = dpi(32),
+            widget = wibox.container.margin,
             {
                 {
                     {
-                        id = 'text_role',
-                        widget = wibox.widget.textbox
+                        {
+                            left = dpi(taglist_padding),
+                            right = dpi(taglist_padding),
+                            widget = wibox.container.margin
+                        },
+                        id = 'background_role',
+                        widget = wibox.container.background,
                     },
-                    left = dpi(taglist_padding),
-                    right = dpi(taglist_padding),
-                    widget = wibox.container.margin
+                    top = dpi(8),
+                    bottom = dpi(8),
+                    left = dpi(6),
+                    right = dpi(6),
+                    widget = wibox.container.margin,
                 },
-                id = 'background_role',
-                widget = wibox.container.background
+                shape = shape.rounded_rect(10),
+                widget = wibox.container.background,
             },
-            top = dpi(3),
-            bottom = dpi(3),
-            left = dpi(0),
-            right = dpi(0),
-            widget = wibox.container.margin,
+            create_callback = function(self, c3, _)
+                if c3.selected then
+                    self.forced_width = dpi(32)
+                elseif #c3:clients() == 0 then
+                    self.forced_width = dpi(22)
+                else
+                    self.forced_width = dpi(22)
+                end
+                self:connect_signal("mouse::enter", function ()
+                    self.widget.bg = beautiful.bg_hover
+                end)
+                self:connect_signal("mouse::leave", function ()
+                    self.widget.bg = nil
+                end)
+            end,
+            update_callback = function(self, c3, _)
+                if c3.selected then
+                    self.forced_width = dpi(32)
+                elseif #c3:clients() == 0 then
+                    self.forced_width = dpi(22)
+                else
+                    self.forced_width = dpi(22)
+                end
+            end
         },
         buttons = taglist_buttons
     }

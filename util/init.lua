@@ -9,19 +9,22 @@ function M.update_border(c)
     if #s.tiled_clients == 1
         or s.selected_tag and (s.selected_tag.layout.name == 'max' or s.selected_tag.layout.name == 'fullscreen')
     then
+        awful.screen.padding(s, 0)
         if c.floating then
             c.border_width = beautiful.border_width
             awful.titlebar.show(c, "top")
             awful.titlebar.show(c, "right")
             awful.titlebar.show(c, "bottom")
             awful.titlebar.show(c, "left")
-            awful.screen.padding(s, { top = 0, right = -2, bottom = -2, left = -2 })
+            -- awful.screen.padding(s, { top = 0, right = -2, bottom = -2, left = -2 })
         elseif s.selected_tag.layout.name == "max" then
-            awful.screen.padding(s, { top = 0, right = -2, bottom = -2, left = -2 })
+            -- awful.screen.padding(s, { top = 0, right = -2, bottom = -2, left = -2 })
             awful.titlebar.show(c, "top")
-            awful.titlebar.show(c, "right")
-            awful.titlebar.show(c, "bottom")
-            awful.titlebar.show(c, "left")
+            awful.titlebar.hide(c, "right")
+            awful.titlebar.hide(c, "bottom")
+            awful.titlebar.hide(c, "left")
+            awful.screen.padding(s, 0)
+            c.border_width = 0
         elseif s.selected_tag.layout.name == 'fullscreen' then
             awful.titlebar.hide(c, "top")
             awful.titlebar.hide(c, "right")
@@ -30,11 +33,12 @@ function M.update_border(c)
             c.border_width = 0
         else
             awful.titlebar.show(c, "top")
-            awful.titlebar.show(c, "right")
-            awful.titlebar.show(c, "bottom")
-            awful.titlebar.show(c, "left")
+            awful.titlebar.hide(c, "right")
+            awful.titlebar.hide(c, "bottom")
+            awful.titlebar.hide(c, "left")
             awful.screen.padding(s, 0)
-            awful.screen.padding(s, { top = 0, right = -2, bottom = -2, left = -2 })
+            c.border_width = 0
+            -- awful.screen.padding(s, { top = 0, right = -2, bottom = -2, left = -2 })
         end
     else
         awful.titlebar.show(c, "top")

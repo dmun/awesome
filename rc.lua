@@ -6,14 +6,16 @@ function Log(message)
     naughty.notify({ title = debug.getinfo(1, 'S').source, text = tostring(message) })
 end
 
-local gears     = require("gears")
-local awful     = require("awful")
-local wibox     = require("wibox")
-local rules     = require("rules")
-local wibar     = require("widgets.wibar")
-local json      = require("util.json")
-local keys      = require("keys")
-local config    = require("config")
+local gears  = require("gears")
+local awful  = require("awful")
+local wibox  = require("wibox")
+local rules  = require("rules")
+local wibar  = require("widgets.wibar")
+local json   = require("util.json")
+local keys   = require("keys")
+local config = require("config")
+local util   = require("util")
+local shape  = require("util.shape")
 require("awful.autofocus")
 
 do
@@ -71,7 +73,7 @@ end
 screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3", "4", "5" }, s, awful.layout.layouts[1])
     local bar = wibar.get(s)
     local hover = wibox({
         screen = s,
@@ -162,7 +164,9 @@ if config.sloppy_focus then
     end)
 end
 
-local util = require("util")
+client.connect_signal("mouse::press", function(c)
+    c:emit_signal("request::activate", "mouse_enter", {raise = false})
+end)
 
 client.connect_signal("focus", function(c) util.update_border(c) c.border_color = beautiful.border_focus c:raise() end)
 client.connect_signal("unfocus", function(c) util.update_border(c) c.border_color = beautiful.border_normal end)

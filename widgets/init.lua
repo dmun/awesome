@@ -19,6 +19,9 @@ function M:new_icon(icon, fg)
             self.widget.markup = string.format("<span foreground='%s'>%s</span>", fg or self.widget.fg, icon or self.widget.icon)
             self.right = dpi(right or 0)
         end,
+        set_right = function(self, right)
+            self.right = dpi(right or 0)
+        end,
     }
 end
 
@@ -43,6 +46,9 @@ function M:new_text(markup)
         end,
         show = function(self)
             self.forced_width = nil
+        end,
+        toggle = function(self)
+            self.forced_width = self.forced_width == nil and 0.01 or nil
         end,
     }
 end

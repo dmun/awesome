@@ -22,8 +22,8 @@ return {
     },
     bar = {
         position = "top",
-        widget_padding = 14,
-        height = 30,
+        widget_padding = 12,
+        height = 32,
         widgets = {
             left = {
                 buttons,

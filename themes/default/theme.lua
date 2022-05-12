@@ -19,16 +19,17 @@ theme.icon_font     = "JetBrainsMono Nerd Font 11"
 -- theme.bg_focus      = "#2d333f"
 theme.bg_normal     = "#000"
 theme.bg_hover      = "#222222"
-theme.bg_focus      = "#222222"
+theme.bg_focus      = "#ffffff"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
 theme.systray_icon_spacing = 15
 
+theme.taglist_bg_empty = "#222222"
+theme.taglist_bg_occupied = "#5B6268"
+
 theme.fg_normal     = "#ffffff"
-theme.taglist_fg_empty = "#5B6268"
--- theme.taglist_bg_occupied = "#222222"
-theme.taglist_shape = require("util.shape").rounded_rect(dpi(3))
+theme.taglist_shape = require("util.shape").rounded_rect(dpi(12))
 theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
@@ -47,7 +48,7 @@ theme.notification_margin = 100
 theme.notification_spacing = dpi(15)
 theme.notification_border_width = 2
 
-theme.snap_bg = "#dddddd44"
+theme.snap_bg = "#00ff0044"
 theme.snap_shape = require("util.shape").rounded_rect(0)
 
 theme.menu_height = dpi(15)
