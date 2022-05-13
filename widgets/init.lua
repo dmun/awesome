@@ -33,6 +33,7 @@ function M:new_text(markup)
             widget = wibox.widget.textbox,
         },
         top = 0,
+        bottom = 0,
         widget = wibox.container.margin,
         set_markup = function(self, markup)
             self.widget.markup = markup

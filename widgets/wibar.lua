@@ -36,7 +36,7 @@ function wibar.get(s)
             local spaced = wibox.widget {
                 {
                     widget,
-                    top = 2,
+                    top = 0,
                     left = dpi(config.bar.widget_padding),
                     right = dpi(config.bar.widget_padding),
                     widget = wibox.container.margin,
