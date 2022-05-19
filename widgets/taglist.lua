@@ -33,8 +33,8 @@ function taglist.get(s)
         screen = s,
         filter = awful.widget.taglist.filter.all,
         widget_template = {
-            top = dpi(5),
-            bottom = dpi(5),
+            top = dpi(4),
+            bottom = dpi(4),
             left = dpi(0),
             right = dpi(0),
             forced_width = dpi(32),

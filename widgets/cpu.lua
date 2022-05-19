@@ -2,8 +2,8 @@ local wibox = require("wibox")
 require("status.cpu")
 
 local widget = require("widgets")
-local icon = widget:new_icon(" ")
-icon:set_right(-4)
+local icon = widget:new_icon(" ")
+icon:set_right(-8)
 local text = widget:new_text(" ")
 text:hide()
 

@@ -12,13 +12,13 @@ local theme = {}
 
 theme.red           = "#E3605F"
 
-theme.font          = "PingFangSC-Medium 8"
-theme.icon_font     = "JetBrainsMono Nerd Font 11"
+theme.font          = "PingFangSC-Medium 9"
+theme.icon_font     = "JetBrainsMono Nerd Font 10"
 
 -- theme.bg_normal     = "#232831"
 -- theme.bg_focus      = "#2d333f"
 theme.bg_normal     = "#000"
-theme.bg_hover      = "#222222"
+theme.bg_hover      = "#1a1a1a"
 theme.bg_focus      = "#ffffff"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
@@ -29,7 +29,7 @@ theme.taglist_bg_empty = "#333333"
 theme.taglist_bg_occupied = "#5B6268"
 
 theme.fg_normal     = "#ffffff"
-theme.taglist_shape = require("util.shape").rounded_rect(dpi(12))
+theme.taglist_shape = require("util.shape").rounded_rect(dpi(8))
 theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
