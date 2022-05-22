@@ -13,7 +13,7 @@ function M:new_icon(icon, fg)
             font = beautiful.icon_font,
             widget = wibox.widget.textbox,
         },
-        bottom = 0,
+        bottom = 1,
         widget = wibox.container.margin,
         set = function(self, icon, fg, right)
             self.widget.markup = string.format("<span foreground='%s'>%s</span>", fg or self.widget.fg, icon or self.widget.icon)
@@ -32,8 +32,6 @@ function M:new_text(markup)
             font = beautiful.font,
             widget = wibox.widget.textbox,
         },
-        top = 1,
-        bottom = 0,
         widget = wibox.container.margin,
         set_markup = function(self, markup)
             self.widget.markup = markup
