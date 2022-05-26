@@ -7,46 +7,22 @@ local M = {}
 function M.update_border(c)
     local s = c.screen
     if #s.tiled_clients == 1
-        or s.selected_tag and (s.selected_tag.layout.name == 'max' or s.selected_tag.layout.name == 'fullscreen')
+        or s.selected_tag and (s.selected_tag.layout.name == "max" or s.selected_tag.layout.name == "fullscreen")
     then
-        awful.screen.padding(s, 0)
+        pcall(c.show_inner_shades, c)
+        c.border_width = 0
         if c.floating then
             c.border_width = beautiful.border_width
-            awful.titlebar.show(c, "top")
-            awful.titlebar.show(c, "right")
-            awful.titlebar.show(c, "bottom")
-            awful.titlebar.show(c, "left")
-            -- awful.screen.padding(s, { top = 0, right = -2, bottom = -2, left = -2 })
+            pcall(c.show_inner_shades, c)
         elseif s.selected_tag.layout.name == "max" then
-            -- awful.screen.padding(s, { top = 0, right = -2, bottom = -2, left = -2 })
-            awful.titlebar.show(c, "top")
-            awful.titlebar.hide(c, "right")
-            awful.titlebar.hide(c, "bottom")
-            awful.titlebar.hide(c, "left")
-            awful.screen.padding(s, 0)
+            pcall(c.show_inner_shades, c)
             c.border_width = 0
-        elseif s.selected_tag.layout.name == 'fullscreen' then
-            awful.titlebar.hide(c, "top")
-            awful.titlebar.hide(c, "right")
-            awful.titlebar.hide(c, "bottom")
-            awful.titlebar.hide(c, "left")
+        elseif s.selected_tag.layout.name == "fullscreen" then
+            pcall(c.hide_inner_shades, c)
             c.border_width = 0
-        else
-            awful.titlebar.show(c, "top")
-            awful.titlebar.hide(c, "right")
-            awful.titlebar.hide(c, "bottom")
-            awful.titlebar.hide(c, "left")
-            awful.screen.padding(s, 0)
-            c.border_width = 0
-            -- awful.screen.padding(s, { top = 0, right = -2, bottom = -2, left = -2 })
         end
     else
-        awful.titlebar.show(c, "top")
-        awful.titlebar.show(c, "right")
-        awful.titlebar.show(c, "bottom")
-        awful.titlebar.show(c, "left")
-        awful.screen.padding(s, { top = 1, right = 2, bottom = 2, left = 2 })
-        awful.placement.honor_padding = false
+        pcall(c.show_inner_shades, c)
         c.border_width = beautiful.border_width
     end
 end
@@ -62,11 +38,11 @@ function M.change(state)
         c.floating = true
         c.ontop = true
     elseif state == "maximized" then
-       awful.layout.set(awful.layout.suit.max)
+        awful.layout.set(awful.layout.suit.max)
     elseif state == "fullscreen" then
         awful.layout.set(awful.layout.suit.max.fullscreen)
     end
-    for _,tc in pairs(c.screen.tiled_clients) do
+    for _, tc in pairs(c.screen.tiled_clients) do
         M.update_border(tc)
     end
     M.update_border(c)
