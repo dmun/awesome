@@ -175,6 +175,13 @@ client.connect_signal("request::border", util.update_border)
 client.connect_signal("property::maximized", util.update_border)
 client.connect_signal("property::floating", util.update_border)
 
+-- Run garbage collector regularly to prevent memory leaks
+gears.timer {
+       timeout = 30,
+       autostart = true,
+       callback = function() collectgarbage() end
+}
+
 for _,v in pairs(config.autostart) do
     awful.spawn.with_shell("pgrep -x '" .. v .. "' > /dev/null || " .. v .. " &")
 end
