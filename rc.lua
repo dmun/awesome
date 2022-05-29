@@ -1,5 +1,5 @@
 local beautiful = require("beautiful")
-beautiful.init(require("themes.default.theme"))
+beautiful.init("/home/david/.config/awesome/themes/default/theme.lua")
 
 local naughty = require("naughty")
 function Log(message)
@@ -16,6 +16,8 @@ local keys = require("keys")
 local config = require("config")
 local util = require("util")
 local shape = require("util.shape")
+local xresources = require("beautiful.xresources")
+local dpi = xresources.apply_dpi
 require("awful.autofocus")
 
 do
@@ -72,19 +74,26 @@ local mymainmenu = awful.menu({
     },
 })
 
-local function set_wallpaper(s)
-    if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
-        -- If wallpaper is a function, call it with the screen
-        if type(wallpaper) == "function" then
-            wallpaper = wallpaper(s)
-        end
-        -- gears.wallpaper.maximized(wallpaper, s, true)
-        gears.wallpaper.set(beautiful.wallpaper_color)
-    end
-end
-
-screen.connect_signal("property::geometry", set_wallpaper)
+screen.connect_signal("request::wallpaper", function(s)
+    awful.wallpaper({
+        screen = s,
+        widget = {
+            {
+                image = beautiful.wallpaper,
+                widget = wibox.widget.imagebox,
+                upscale = true,
+                downscale = true,
+                clip_shape = shape.rounded_rect(15),
+                horizontal_fit_policy = "fit",
+                vertical_fit_policy = "fit",
+                valign = "center",
+                halign = "center",
+            },
+            margins = { top = dpi(config.bar.height) },
+            widget = wibox.container.margin,
+        },
+    })
+end)
 
 awful.screen.connect_for_each_screen(function(s)
     awful.tag({ "1", "2", "3", "4", "5" }, s, awful.layout.layouts[1])
@@ -127,7 +136,7 @@ root.buttons(gears.table.join(
 
 root.keys(keys.globalkeys)
 awful.rules.rules = rules
-inner_shades = {}
+-- inner_shades = {}
 -- inner_shades:setup({
 --     {
 --         markup = "XD",
@@ -145,110 +154,111 @@ client.connect_signal("manage", function(c)
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
     end
-    inner_shades[c.window] = {}
-    inner_shades[c.window].top = wibox({
-        height = 1,
-        ontop = true,
-        visible = true,
-        input_passthrough = true,
-    })
-    inner_shades[c.window].right = wibox({
-        width = 1,
-        ontop = true,
-        visible = true,
-        input_passthrough = true,
-    })
-    inner_shades[c.window].bottom = wibox({
-        height = 1,
-        ontop = true,
-        visible = true,
-        input_passthrough = true,
-    })
-    inner_shades[c.window].left = wibox({
-        width = 1,
-        ontop = true,
-        visible = true,
-        input_passthrough = true,
-    })
-    c.update_inner_shade = function(c)
-        local ok, _ = pcall(function()
-            return c.border_width
-        end)
-        if not ok then
-            return nil
-        end
-
-        local bw = c.border_width
-        if c then
-            inner_shades[c.window].top.bg = c == client.focus and "#ffffff66" or "#ffffff44"
-            inner_shades[c.window].top.x = c:geometry().x + bw
-            inner_shades[c.window].top.y = c:geometry().y + bw
-            inner_shades[c.window].top.width = c:geometry().width
-            inner_shades[c.window].top.input_passthrough = true
-
-            inner_shades[c.window].right.bg = c == client.focus and "#ffffff44" or "#ffffff33"
-            inner_shades[c.window].right.x = c:geometry().x + c:geometry().width + bw - 1
-            inner_shades[c.window].right.y = c:geometry().y + bw + 1
-            inner_shades[c.window].right.height = c:geometry().height - 2
-            inner_shades[c.window].right.input_passthrough = true
-
-            inner_shades[c.window].bottom.bg = c == client.focus and "#ffffff44" or "#ffffff33"
-            inner_shades[c.window].bottom.x = c:geometry().x + bw
-            inner_shades[c.window].bottom.y = c:geometry().y + c:geometry().height + bw - 1
-            inner_shades[c.window].bottom.width = c:geometry().width
-            inner_shades[c.window].bottom.input_passthrough = true
-
-            inner_shades[c.window].left.bg = c == client.focus and "#ffffff44" or "#ffffff33"
-            inner_shades[c.window].left.x = c:geometry().x + bw
-            inner_shades[c.window].left.y = c:geometry().y + bw + 1
-            inner_shades[c.window].left.height = c:geometry().height - 2
-            inner_shades[c.window].left.input_passthrough = true
-        end
-    end
-
-    c.hide_inner_shades = function(c)
-        inner_shades[c.window].visible = false
-        inner_shades[c.window].top.visible = false
-        inner_shades[c.window].right.visible = false
-        inner_shades[c.window].bottom.visible = false
-        inner_shades[c.window].left.visible = false
-    end
-    c.show_inner_shades = function(c)
-        inner_shades[c.window].visible = true
-        inner_shades[c.window].top.visible = true
-        inner_shades[c.window].right.visible = true
-        inner_shades[c.window].bottom.visible = true
-        inner_shades[c.window].left.visible = true
-    end
-    c.update_visible = function(c)
-        if c then
-            if c.screen.selected_tag then
-                if not c.first_tag then
-                    return nil
-                end
-                for _, value in pairs(c.first_tag:clients()) do
-                    if inner_shades[value.window] then
-                        -- value.visible = false
-                        -- for _, v in pairs(inner_shades[value.window]) do
-                        inner_shades[value.window].top.visible = true
-                        inner_shades[value.window].right.visible = true
-                        inner_shades[value.window].bottom.visible = true
-                        inner_shades[value.window].left.visible = true
-                        -- end
-                    end
-                end
-            else
-                for _, value in pairs(c.first_tag:clients()) do
-                    inner_shades[value.window].visible = false
-                    inner_shades[value.window].top.visible = false
-                    inner_shades[value.window].right.visible = false
-                    inner_shades[value.window].bottom.visible = false
-                    inner_shades[value.window].left.visible = false
-                end
-            end
-        end
-    end
-    c.update_inner_shade()
+    c.shape = shape.rounded_rect(15)
+    -- inner_shades[c.window] = {}
+    -- inner_shades[c.window].top = wibox({
+    --     height = 1,
+    --     ontop = true,
+    --     visible = true,
+    --     input_passthrough = true,
+    -- })
+    -- inner_shades[c.window].right = wibox({
+    --     width = 1,
+    --     ontop = true,
+    --     visible = true,
+    --     input_passthrough = true,
+    -- })
+    -- inner_shades[c.window].bottom = wibox({
+    --     height = 1,
+    --     ontop = true,
+    --     visible = true,
+    --     input_passthrough = true,
+    -- })
+    -- inner_shades[c.window].left = wibox({
+    --     width = 1,
+    --     ontop = true,
+    --     visible = true,
+    --     input_passthrough = true,
+    -- })
+    -- c.update_inner_shade = function(c)
+    --     local ok, _ = pcall(function()
+    --         return c.border_width
+    --     end)
+    --     if not ok then
+    --         return nil
+    --     end
+    --
+    --     local bw = c.border_width
+    --     if c then
+    --         inner_shades[c.window].top.bg = c == client.focus and "#ffffff66" or "#ffffff44"
+    --         inner_shades[c.window].top.x = c:geometry().x + bw
+    --         inner_shades[c.window].top.y = c:geometry().y + bw
+    --         inner_shades[c.window].top.width = c:geometry().width
+    --         inner_shades[c.window].top.input_passthrough = true
+    --
+    --         inner_shades[c.window].right.bg = c == client.focus and "#ffffff44" or "#ffffff33"
+    --         inner_shades[c.window].right.x = c:geometry().x + c:geometry().width + bw - 1
+    --         inner_shades[c.window].right.y = c:geometry().y + bw + 1
+    --         inner_shades[c.window].right.height = c:geometry().height - 2
+    --         inner_shades[c.window].right.input_passthrough = true
+    --
+    --         inner_shades[c.window].bottom.bg = c == client.focus and "#ffffff44" or "#ffffff33"
+    --         inner_shades[c.window].bottom.x = c:geometry().x + bw
+    --         inner_shades[c.window].bottom.y = c:geometry().y + c:geometry().height + bw - 1
+    --         inner_shades[c.window].bottom.width = c:geometry().width
+    --         inner_shades[c.window].bottom.input_passthrough = true
+    --
+    --         inner_shades[c.window].left.bg = c == client.focus and "#ffffff44" or "#ffffff33"
+    --         inner_shades[c.window].left.x = c:geometry().x + bw
+    --         inner_shades[c.window].left.y = c:geometry().y + bw + 1
+    --         inner_shades[c.window].left.height = c:geometry().height - 2
+    --         inner_shades[c.window].left.input_passthrough = true
+    --     end
+    -- end
+    --
+    -- c.hide_inner_shades = function(c)
+    --     inner_shades[c.window].visible = false
+    --     inner_shades[c.window].top.visible = false
+    --     inner_shades[c.window].right.visible = false
+    --     inner_shades[c.window].bottom.visible = false
+    --     inner_shades[c.window].left.visible = false
+    -- end
+    -- c.show_inner_shades = function(c)
+    --     inner_shades[c.window].visible = true
+    --     inner_shades[c.window].top.visible = true
+    --     inner_shades[c.window].right.visible = true
+    --     inner_shades[c.window].bottom.visible = true
+    --     inner_shades[c.window].left.visible = true
+    -- end
+    -- c.update_visible = function(c)
+    --     if c then
+    --         if c.screen.selected_tag then
+    --             if not c.first_tag then
+    --                 return nil
+    --             end
+    --             for _, value in pairs(c.first_tag:clients()) do
+    --                 if inner_shades[value.window] then
+    --                     -- value.visible = false
+    --                     -- for _, v in pairs(inner_shades[value.window]) do
+    --                     inner_shades[value.window].top.visible = true
+    --                     inner_shades[value.window].right.visible = true
+    --                     inner_shades[value.window].bottom.visible = true
+    --                     inner_shades[value.window].left.visible = true
+    --                     -- end
+    --                 end
+    --             end
+    --         else
+    --             for _, value in pairs(c.first_tag:clients()) do
+    --                 inner_shades[value.window].visible = false
+    --                 inner_shades[value.window].top.visible = false
+    --                 inner_shades[value.window].right.visible = false
+    --                 inner_shades[value.window].bottom.visible = false
+    --                 inner_shades[value.window].left.visible = false
+    --             end
+    --         end
+    --     end
+    -- end
+    -- c.update_inner_shade()
 end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
@@ -298,41 +308,48 @@ client.connect_signal("mouse::press", function(c)
 end)
 
 client.connect_signal("focus", function(c)
-    util.update_border(c)
+    -- util.update_border(c)
     c.border_color = beautiful.border_focus
     c:raise()
-    if c.update_inner_shade then
-        c:update_inner_shade()
-        c:update_visible()
-    end
+    -- if c.update_inner_shade then
+    --     c:update_inner_shade()
+    --     c:update_visible()
+    -- end
 end)
 client.connect_signal("unfocus", function(c)
-    util.update_border(c)
+    -- util.update_border(c)
     c.border_color = beautiful.border_normal
-    if c.update_inner_shade then
-        c:update_inner_shade()
-        c:update_visible()
-    end
+    -- if c.update_inner_shade then
+    --     c:update_inner_shade()
+    --     c:update_visible()
+    -- end
 end)
-client.connect_signal("unmanage", function(c)
-    c:hide_inner_shades()
-end)
+-- client.connect_signal("unmanage", function(c)
+--     c:hide_inner_shades()
+-- end)
 
-client.connect_signal("request::border", util.update_border)
-client.connect_signal("property::maximized", util.update_border)
-client.connect_signal("property::floating", util.update_border)
-client.connect_signal("property::size", function(c)
-    -- Log(c.class)
-    if c.update_inner_shade then
-        c:update_inner_shade()
+-- client.connect_signal("request::border", util.update_border)
+-- client.connect_signal("property::maximized", util.update_border)
+client.connect_signal("property::fullscreen", function(c)
+    if c.fullscreen then
+        c.shape = nil
+    else
+        c.shape = shape.rounded_rect(15)
     end
 end)
-client.connect_signal("property::position", function(c)
-    -- Log(c.class)
-    if c.update_inner_shade then
-        c:update_inner_shade()
-    end
-end)
+-- client.connect_signal("property::floating", util.update_border)
+-- client.connect_signal("property::size", function(c)
+--     -- Log(c.class)
+--     if c.update_inner_shade then
+--         c:update_inner_shade()
+--     end
+-- end)
+-- client.connect_signal("property::position", function(c)
+--     -- Log(c.class)
+--     if c.update_inner_shade then
+--         c:update_inner_shade()
+--     end
+-- end)
 
 naughty.config.defaults.title = "Notification"
 naughty.config.presets.normal = {

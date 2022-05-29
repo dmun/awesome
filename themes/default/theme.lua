@@ -23,7 +23,7 @@ theme.bg_focus      = "#ffffff"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
-theme.systray_icon_spacing = 15
+theme.systray_icon_spacing = 20
 
 theme.taglist_bg_empty = "#333333"
 theme.taglist_bg_occupied = "#5B6268"
@@ -35,7 +35,7 @@ theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
 theme.gap_single_client = false
-theme.useless_gap   = dpi(5)
+theme.useless_gap   = dpi(0)
 -- theme.useless_gap   = -1
 theme.border_width  = 1
 theme.inner_border_width  = 1
@@ -54,7 +54,7 @@ theme.snap_shape = require("util.shape").rounded_rect(0)
 theme.menu_height = dpi(15)
 theme.menu_width  = dpi(100)
 
-theme.wallpaper = themes_path .. "default/background.png"
+theme.wallpaper = themes_path .. "default/background.jpg"
 theme.wallpaper_color = "#1b1e23"
 theme.icon_theme = nil
 

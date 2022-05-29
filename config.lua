@@ -9,7 +9,6 @@ local memory      = require "widgets.memory"
 
 return {
     autostart = {
-        "~/.fehbg",
         "xrdb ~/.Xresources",
         "xset r rate 225 33",
         "xmodmap ~/.Xmodmap",
@@ -18,6 +17,7 @@ return {
         "nm-applet",
         "blueman-applet",
         "redshift-gtk",
+        "picom",
     },
     bar = {
         position = "top",
