@@ -11,10 +11,8 @@ local awful = require("awful")
 local wibox = require("wibox")
 local rules = require("rules")
 local wibar = require("widgets.wibar")
-local json = require("util.json")
 local keys = require("keys")
 local config = require("config")
-local util = require("util")
 local shape = require("util.shape")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
@@ -83,7 +81,7 @@ screen.connect_signal("request::wallpaper", function(s)
                 widget = wibox.widget.imagebox,
                 upscale = true,
                 downscale = true,
-                clip_shape = shape.rounded_rect(15),
+                clip_shape = shape.rounded_rect(10),
                 horizontal_fit_policy = "fit",
                 vertical_fit_policy = "fit",
                 valign = "center",
@@ -154,7 +152,7 @@ client.connect_signal("manage", function(c)
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
     end
-    c.shape = shape.rounded_rect(15)
+    c.shape = shape.rounded_rect(10)
     -- inner_shades[c.window] = {}
     -- inner_shades[c.window].top = wibox({
     --     height = 1,
@@ -334,7 +332,7 @@ client.connect_signal("property::fullscreen", function(c)
     if c.fullscreen then
         c.shape = nil
     else
-        c.shape = shape.rounded_rect(15)
+        c.shape = shape.rounded_rect(10)
     end
 end)
 -- client.connect_signal("property::floating", util.update_border)

@@ -37,7 +37,7 @@ function taglist.get(s)
             bottom = dpi(4),
             left = dpi(0),
             right = dpi(0),
-            forced_width = dpi(32),
+            forced_width = dpi(22),
             widget = wibox.container.margin,
             {
                 {
@@ -60,13 +60,6 @@ function taglist.get(s)
                 widget = wibox.container.background,
             },
             create_callback = function(self, c3, _)
-                if c3.selected then
-                    self.forced_width = dpi(32)
-                elseif #c3:clients() == 0 then
-                    self.forced_width = dpi(22)
-                else
-                    self.forced_width = dpi(22)
-                end
                 self:connect_signal("mouse::enter", function ()
                     self.widget.bg = beautiful.bg_hover
                 end)
@@ -74,15 +67,6 @@ function taglist.get(s)
                     self.widget.bg = nil
                 end)
             end,
-            update_callback = function(self, c3, _)
-                if c3.selected then
-                    self.forced_width = dpi(32)
-                elseif #c3:clients() == 0 then
-                    self.forced_width = dpi(22)
-                else
-                    self.forced_width = dpi(22)
-                end
-            end
         },
         buttons = taglist_buttons
     }

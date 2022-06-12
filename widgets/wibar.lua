@@ -83,6 +83,7 @@ function wibar.get(s)
         expand = "none",
         {
             widgets.left,
+            left = dpi(config.bar.widget_padding / 2),
             widget = wibox.container.margin
         },
         {
@@ -91,7 +92,7 @@ function wibar.get(s)
         },
         {
             widgets.right,
-            right = dpi(8),
+            right = dpi(config.bar.widget_padding / 2),
             widget = wibox.container.margin
         }
     }

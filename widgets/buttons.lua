@@ -7,7 +7,7 @@ local awful      = require("awful")
 
 local M = {}
 
-local button_spacing = 8
+local button_spacing = dpi(5)
 
 local buttons = {
     {
